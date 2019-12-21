@@ -1,3 +1,8 @@
+// -*- mode: java; c-basic-offset: 2; -*-
+// Copyright © 2013-2019 MIT, All rights reserved.
+// Released under the Apache License, Version 2.0
+// http://www.apache.org/licenses/LICENSE-2.0
+
 package com.google.appinventor.components.runtime;
 
 import android.R;
@@ -49,6 +54,7 @@ import com.google.appinventor.components.runtime.util.SdkLevel;
  * @author hal@mit.edu (Hal Abelson)
  */
 @DesignerComponent(version = YaVersion.SLIDER_COMPONENT_VERSION,
+    iconName = "images/slider.png",
     description = "A Slider is a progress bar that adds a draggable thumb. You can touch " +
         "the thumb and drag left or right to set the slider thumb position. " +
         "As the Slider thumb is dragged, it will trigger the PositionChanged event, " +

@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2012 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -36,6 +36,7 @@ import android.widget.EditText;
  * {@code Button} after entering text.
  */
 @DesignerComponent(version = YaVersion.PASSWORDTEXTBOX_COMPONENT_VERSION,
+    iconName = "images/passwordtextbox.png",
     description = "<p>A box for entering passwords.  This is the same as " +
     "the ordinary <code>TextBox</code> component except this does not " +
     "display the characters typed by the user.</p><p>The value of the text " +

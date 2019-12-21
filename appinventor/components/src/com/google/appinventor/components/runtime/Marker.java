@@ -1,5 +1,5 @@
 // -*- mode: java; c-basic-offset: 2; -*-
-// Copyright © 2016-2017 Massachusetts Institute of Technology, All rights reserved.
+// Copyright © 2016-2019 Massachusetts Institute of Technology, All rights reserved.
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -51,6 +51,7 @@ import org.osmdroid.util.GeoPoint;
  * the ["Any Component"](../other/any-component-blocks.html) blocks.
  */
 @DesignerComponent(version = YaVersion.MARKER_COMPONENT_VERSION,
+    iconName = "images/marker.png",
     category = ComponentCategory.MAPS,
     description = "<p>An icon positioned at a point to indicate information on a map. Markers "
         + "can be used to provide an info window, custom fill and stroke colors, and custom "

@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2018 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -55,6 +55,7 @@ import com.google.appinventor.components.runtime.util.SdkLevel;
  * @author Yifan(Evan) Li (for contact Uri)
  */
 @DesignerComponent(version = YaVersion.CONTACTPICKER_COMPONENT_VERSION,
+    iconName = "images/contactPicker.png",
     description = "A button that, when clicked on, displays a list of " +
     "the contacts to choose among. After the user has made a " +
     "selection, the following properties will be set to information about " +

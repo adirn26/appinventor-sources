@@ -43,6 +43,7 @@ import java.io.IOException;
  * rotated.* Any of the sprite properties can be changed at any time under program control.
  */
 @DesignerComponent(version = YaVersion.IMAGESPRITE_COMPONENT_VERSION,
+    iconName = "images/imageSprite.png",
     description = "<p>A 'sprite' that can be placed on a " +
         "<code>Canvas</code>, where it can react to touches and drags, " +
         "interact with other sprites (<code>Ball</code>s and other " +

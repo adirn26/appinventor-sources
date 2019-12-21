@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2012 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -41,6 +41,7 @@ import android.view.WindowManager;
  */
 @DesignerComponent(version = YaVersion.LISTPICKER_COMPONENT_VERSION,
     category = ComponentCategory.USERINTERFACE,
+    iconName = "images/listPicker.png",
     description = "<p>A button that, when clicked on, displays a list of " +
     "texts for the user to choose among. The texts can be specified through " +
     "the Designer or Blocks Editor by setting the " +

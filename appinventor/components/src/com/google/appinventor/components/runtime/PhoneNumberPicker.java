@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2012 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -49,6 +49,7 @@ import java.util.List;
  * @author markf@google.com (Mark Friedman)
  */
 @DesignerComponent(version = YaVersion.PHONENUMBERPICKER_COMPONENT_VERSION,
+    iconName = "images/phoneNumberPicker.png",
     description = "A button that, when clicked on, displays a list of " +
     "the contacts' phone numbers to choose among. After the user has made a " +
     "selection, the following properties will be set to information about " +

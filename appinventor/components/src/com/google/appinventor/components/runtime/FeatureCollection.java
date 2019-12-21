@@ -1,5 +1,5 @@
 // -*- mode: java; c-basic-offset: 2; -*-
-// Copyright © 2017 Massachusetts Institute of Technology, All rights reserved.
+// Copyright © 2017-2019 Massachusetts Institute of Technology, All rights reserved.
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -29,6 +29,7 @@ import org.json.JSONException;
  * GeoJSON is the only format supported at this time.
  */
 @DesignerComponent(version = YaVersion.FEATURE_COLLECTION_COMPONENT_VERSION,
+    iconName = "images/featurecollection.png",
     category = ComponentCategory.MAPS,
     description = "A FeatureCollection contains one or more map features as a group. Any events " +
         "fired on a feature in the collection will also trigger the corresponding event on the " +

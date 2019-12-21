@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2012 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -31,6 +31,7 @@ import android.widget.TextView;
  * can be set in the Designer or Blocks Editor, control the appearance and placement of the text.
  */
 @DesignerComponent(version = YaVersion.LABEL_COMPONENT_VERSION,
+    iconName = "images/label.png",
     description = "A Label displays a piece of text, which is " +
     "specified through the <code>Text</code> property.  Other properties, " +
     "all of which can be set in the Designer or Blocks Editor, control " +

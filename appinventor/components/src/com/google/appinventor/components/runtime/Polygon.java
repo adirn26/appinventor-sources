@@ -1,5 +1,5 @@
 // -*- mode: java; c-basic-offset: 2; -*-
-// Copyright © 2016-2020 Massachusetts Institute of Technology, All rights reserved.
+// Copyright © 2016-2021 Massachusetts Institute of Technology, All rights reserved.
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -51,6 +51,7 @@ import org.osmdroid.util.GeoPoint;
  * on a vertex will remove the vertex, but a minimum of 3 vertices must exist at all times.
  */
 @DesignerComponent(version = YaVersion.POLYGON_COMPONENT_VERSION,
+    iconName = "images/polygon.png",
     category = ComponentCategory.MAPS,
     description = "Polygon")
 @SimpleObject

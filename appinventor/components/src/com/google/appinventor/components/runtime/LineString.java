@@ -45,6 +45,7 @@ import org.osmdroid.util.GeoPoint;
  * location. Clicking on a vertex will delete the vertex, unless only two remain.
  */
 @DesignerComponent(version = YaVersion.LINESTRING_COMPONENT_VERSION,
+    iconName = "images/linestring.png",
     category = ComponentCategory.MAPS,
     description = "LineString")
 @SimpleObject

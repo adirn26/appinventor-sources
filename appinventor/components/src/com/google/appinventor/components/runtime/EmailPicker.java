@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2018 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -35,6 +35,7 @@ import android.widget.AutoCompleteTextView;
  * @author sharon@google.com (Sharon Perl)
  */
 @DesignerComponent(version = YaVersion.EMAILPICKER_COMPONENT_VERSION,
+    iconName = "images/emailPicker.png",
     description = "An EmailPicker is a kind of text box.  " +
     "If the user begins entering the name " +
     "or email address of a contact, the phone will show a dropdown menu of " +

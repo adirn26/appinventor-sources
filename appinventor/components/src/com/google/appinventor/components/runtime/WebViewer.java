@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2020 MIT, All rights reserved
+// Copyright 2011-2021 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -92,6 +92,7 @@ import com.google.appinventor.components.runtime.util.SdkLevel;
 
 @DesignerComponent(version = YaVersion.WEBVIEWER_COMPONENT_VERSION,
     category = ComponentCategory.USERINTERFACE,
+    iconName = "images/webviewer.png",
     description = "Component for viewing Web pages.  The Home URL can be " +
         "specified in the Designer or in the Blocks Editor.  The view can be set " +
         "to follow links when they are tapped, and users can fill in Web forms. " +

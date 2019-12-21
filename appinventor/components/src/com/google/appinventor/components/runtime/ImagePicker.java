@@ -50,6 +50,7 @@ import java.util.Comparator;
  * @author halabelson@google.com (Hal Abelson)
  */
 @DesignerComponent(version = YaVersion.IMAGEPICKER_COMPONENT_VERSION,
+    iconName = "images/imagePicker.png",
     description = "A special-purpose button. When the user taps an image picker, the " +
           "device's image gallery appears, and the user can choose an image. After an image is " +
           "picked, it is saved, and the <code>Selected</code> " +

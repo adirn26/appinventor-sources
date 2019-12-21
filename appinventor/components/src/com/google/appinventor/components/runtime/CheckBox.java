@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2018 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -25,6 +25,7 @@ import com.google.appinventor.components.common.YaVersion;
  * its appearance that can be set in the Designer or Blocks Editor.
  */
 @DesignerComponent(version = YaVersion.CHECKBOX_COMPONENT_VERSION,
+    iconName = "images/checkbox.png",
     description = "Checkbox that raises an event when the user clicks on it. " +
     "There are many properties affecting its appearance that can be set in " +
     "the Designer or Blocks Editor.",

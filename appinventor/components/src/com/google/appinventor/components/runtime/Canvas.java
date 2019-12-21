@@ -116,6 +116,7 @@ import java.util.Set;
  * changing the background color or image clears the drawing layer.
  */
 @DesignerComponent(version = YaVersion.CANVAS_COMPONENT_VERSION,
+    iconName = "images/canvas.png",
     description = "<p>A two-dimensional touch-sensitive rectangular panel on " +
     "which drawing can be done and sprites can be moved.</p> " +
     "<p>The <code>BackgroundColor</code>, <code>PaintColor</code>, " +

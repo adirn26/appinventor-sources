@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2012 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -51,6 +51,7 @@ import android.widget.EditText;
  * @author halabelson@google.com (Hal Abelson)
  */
 @DesignerComponent(version = YaVersion.TEXTBOX_COMPONENT_VERSION,
+    iconName = "images/textbox.png",
     description = "<p>A box for the user to enter text.  The initial or " +
     "user-entered text value is in the <code>Text</code> property.  If " +
     "blank, the <code>Hint</code> property, which appears as faint text " +

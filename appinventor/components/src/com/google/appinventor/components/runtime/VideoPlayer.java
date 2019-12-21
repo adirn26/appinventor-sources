@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2020 MIT, All rights reserved
+// Copyright 2011-2021 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -95,6 +95,7 @@ import java.io.IOException;
 
 @DesignerComponent(
     version = YaVersion.VIDEOPLAYER_COMPONENT_VERSION,
+    iconName = "images/videoPlayer.png",
     description = "A multimedia component capable of playing videos. "
         + "When the application is run, the VideoPlayer will be displayed as a "
         + "rectangle on-screen.  If the user touches the rectangle, controls will "

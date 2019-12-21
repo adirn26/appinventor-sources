@@ -1,5 +1,5 @@
 // -*- mode: java; c-basic-offset: 2; -*-
-// Copyright 2016-2017 MIT, All rights reserved
+// Copyright 2016-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -44,6 +44,7 @@ import org.osmdroid.util.GeoPoint;
  * inside or outside of the `Circle`. You can use this feature to trigger additional actions.
  */
 @DesignerComponent(version = YaVersion.CIRCLE_COMPONENT_VERSION,
+    iconName = "images/circle.png",
     category = ComponentCategory.MAPS,
     description = "Circle")
 @SimpleObject

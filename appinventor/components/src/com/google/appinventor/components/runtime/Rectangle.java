@@ -1,5 +1,5 @@
 // -*- mode: java; c-basic-offset: 2; -*-
-// Copyright © 2016-2017 Massachusetts Institute of Technology, All rights reserved.
+// Copyright © 2016-2019 Massachusetts Institute of Technology, All rights reserved.
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -36,6 +36,7 @@ import com.google.appinventor.components.runtime.util.YailList;
  * west boundaries. Moving a vertex of the `Rectangle` updates the appropriate edges accordingly.
  */
 @DesignerComponent(version = YaVersion.RECTANGLE_COMPONENT_VERSION,
+    iconName = "images/rectangle.png",
     category = ComponentCategory.MAPS,
     description = "Rectangle")
 @SimpleObject
