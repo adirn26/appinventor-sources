@@ -1,9 +1,12 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright © 2009-2011 Google, All Rights reserved
-// Copyright © 2011-2016 Massachusetts Institute of Technology, All rights reserved
+// Copyright © 2011-2019 Massachusetts Institute of Technology, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
+
 package com.google.appinventor.client.editor.youngandroid;
+
+import static com.google.appinventor.client.Ode.MESSAGES;
 
 import com.google.appinventor.client.ErrorReporter;
 import com.google.appinventor.client.Ode;
@@ -16,10 +19,8 @@ import com.google.appinventor.client.editor.simple.SimpleComponentDatabase;
 import com.google.appinventor.client.editor.simple.components.FormChangeListener;
 import com.google.appinventor.client.editor.simple.components.MockComponent;
 import com.google.appinventor.client.editor.simple.components.MockForm;
-import com.google.appinventor.client.editor.simple.palette.DropTargetProvider;
 import com.google.appinventor.client.editor.youngandroid.BlocklyPanel.BlocklyWorkspaceChangeListener;
 import com.google.appinventor.client.editor.youngandroid.events.EventHelper;
-import com.google.appinventor.client.editor.youngandroid.palette.YoungAndroidPalettePanel;
 import com.google.appinventor.client.explorer.SourceStructureExplorer;
 import com.google.appinventor.client.explorer.SourceStructureExplorerItem;
 import com.google.appinventor.client.explorer.project.ComponentDatabaseChangeListener;
@@ -62,8 +63,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.google.appinventor.client.Ode.MESSAGES;
-
 /**
  * Editor for Young Android Blocks (.blk) files.
  *
@@ -80,7 +79,7 @@ public final class YaBlocksEditor extends FileEditor
   private static final int VIEWER_WINDOW_OFFSET = 170;
 
   // Database of component type descriptions
-  private final SimpleComponentDatabase COMPONENT_DATABASE;
+  private final SimpleComponentDatabase componentDatabase;
 
   // Keep a map from projectid_formname -> YaBlocksEditor for handling blocks workspace changed
   // callbacks from the BlocklyPanel objects. This has to be static because it is used by
@@ -94,9 +93,6 @@ public final class YaBlocksEditor extends FileEditor
 
   // References to other panels that we need to control.
   private final SourceStructureExplorer sourceStructureExplorer;
-
-  // Panel that is used as the content of the palette box
-  private final YoungAndroidPalettePanel palettePanel;
 
   // Blocks area. Note that the blocks area is a part of the "document" in the
   // browser (via the deckPanel in the ProjectEditor). So if the document changes (which happens
@@ -129,11 +125,12 @@ public final class YaBlocksEditor extends FileEditor
     super(projectEditor, blocksNode);
 
     this.blocksNode = blocksNode;
-    COMPONENT_DATABASE = SimpleComponentDatabase.getInstance(getProjectId());
+    componentDatabase = SimpleComponentDatabase.getInstance(getProjectId());
 
     fullFormName = blocksNode.getProjectId() + "_" + blocksNode.getFormName();
     formToBlocksEditor.put(fullFormName, this);
-    blocksArea = new BlocklyPanel(this, fullFormName); // [lyn, 2014/10/28] pass in editor so can extract form json from it
+    // [lyn, 2014/10/28] pass in editor so can extract form json from it
+    blocksArea = new BlocklyPanel(this, fullFormName);
     blocksArea.setWidth("100%");
     // This code seems to be using a rather old layout, so we cannot simply pass 100% for height.
     // Instead, it needs to be calculated from the client's window, and a listener added to Window
@@ -142,40 +139,20 @@ public final class YaBlocksEditor extends FileEditor
     // http://stackoverflow.com/questions/86901/creating-a-fluid-panel-in-gwt-to-fill-the-page
     blocksArea.setHeight(Window.getClientHeight() - VIEWER_WINDOW_OFFSET + "px");
     Window.addResizeHandler(new ResizeHandler() {
-     public void onResize(ResizeEvent event) {
-       int height = event.getHeight();
-       blocksArea.setHeight(height - VIEWER_WINDOW_OFFSET + "px");
-     }
+      public void onResize(ResizeEvent event) {
+        int height = event.getHeight();
+        blocksArea.setHeight(height - VIEWER_WINDOW_OFFSET + "px");
+      }
     });
     initWidget(blocksArea);
-    blocksArea.populateComponentTypes(COMPONENT_DATABASE.getComponentsJSONString());
+    blocksArea.populateComponentTypes(componentDatabase.getComponentsJSONString());
 
     // Get references to the source structure explorer
     sourceStructureExplorer = BlockSelectorBox.getBlockSelectorBox().getSourceStructureExplorer();
 
     // Listen for selection events for built-in drawers
     BlockSelectorBox.getBlockSelectorBox().addBlockDrawerSelectionListener(this);
-
-    // Create palettePanel, which will be used as the content of the PaletteBox.
     myFormEditor = projectEditor.getFormFileEditor(blocksNode.getFormName());
-    if (myFormEditor != null) {
-      palettePanel = new YoungAndroidPalettePanel(myFormEditor);
-      palettePanel.loadComponents(new DropTargetProvider() {
-        // TODO(sharon): make the tree in the BlockSelectorBox a drop target
-        @Override
-        public DropTarget[] getDropTargets() {
-          return new DropTarget[0];
-        }
-      });
-      palettePanel.setSize("100%", "100%");
-    } else {
-      palettePanel = null;
-      OdeLog.wlog("Can't get form editor for blocks: " + getFileId());
-    }
-
-    project = Ode.getInstance().getProjectManager().getProject(blocksNode.getProjectId());
-    project.addProjectChangeListener(this);
-    onProjectLoaded(project);
   }
 
   // FileEditor methods
@@ -184,7 +161,8 @@ public final class YaBlocksEditor extends FileEditor
   public void loadFile(final Command afterFileLoaded) {
     final long projectId = getProjectId();
     final String fileId = getFileId();
-    OdeAsyncCallback<ChecksumedLoadFile> callback = new OdeAsyncCallback<ChecksumedLoadFile>(MESSAGES.loadError()) {
+    OdeAsyncCallback<ChecksumedLoadFile> callback = new OdeAsyncCallback<ChecksumedLoadFile>(
+        MESSAGES.loadError()) {
       @Override
       public void onSuccess(ChecksumedLoadFile result) {
         String blkFileContent;
@@ -194,11 +172,12 @@ public final class YaBlocksEditor extends FileEditor
           this.onFailure(e);
           return;
         }
-        String formJson = myFormEditor.preUpgradeJsonString(); // [lyn, 2014/10/27] added formJson for upgrading
+        // [lyn, 2014/10/27] added formJson for upgrading
+        String formJson = myFormEditor.preUpgradeJsonString();
         try {
           blocksArea.loadBlocksContent(formJson, blkFileContent);
           blocksArea.addChangeListener(YaBlocksEditor.this);
-        } catch(LoadBlocksException e) {
+        } catch (LoadBlocksException e) {
           setBlocksDamaged(fullFormName);
           ErrorReporter.reportError(MESSAGES.blocksNotSaved(fullFormName));
         }
@@ -208,6 +187,7 @@ public final class YaBlocksEditor extends FileEditor
           afterFileLoaded.execute();
         }
       }
+
       @Override
       public void onFailure(Throwable caught) {
         if (caught instanceof ChecksumedFileException) {
@@ -240,10 +220,6 @@ public final class YaBlocksEditor extends FileEditor
   private void loadBlocksEditor() {
 
     // Set the palette box's content.
-    if (palettePanel != null) {
-      PaletteBox paletteBox = PaletteBox.getPaletteBox();
-      paletteBox.setContent(palettePanel);
-    }
     PaletteBox.getPaletteBox().setVisible(false);
 
     // Update the source structure explorer with the tree of this form's components.
@@ -286,7 +262,10 @@ public final class YaBlocksEditor extends FileEditor
   @Override
   public void onClose() {
     // our partner YaFormEditor added us as a FormChangeListener, but we remove ourself.
-    getForm().removeFormChangeListener(this);
+    MockForm form = getForm();
+    if (form != null) {
+      form.removeFormChangeListener(this);
+    }
     project.removeProjectChangeListener(this);
     BlockSelectorBox.getBlockSelectorBox().removeBlockDrawerSelectionListener(this);
     formToBlocksEditor.remove(fullFormName);
@@ -295,7 +274,7 @@ public final class YaBlocksEditor extends FileEditor
 
   public static void toggleWarning() {
     BlocklyPanel.switchWarningVisibility();
-    for(YaBlocksEditor editor : formToBlocksEditor.values()){
+    for (YaBlocksEditor editor : formToBlocksEditor.values()) {
       editor.blocksArea.toggleWarning();
     }
   }
@@ -308,9 +287,11 @@ public final class YaBlocksEditor extends FileEditor
     paletteBox.clear();
     paletteBox.setVisible(true);
 
-    Ode.getInstance().getWorkColumns().remove(Ode.getInstance().getStructureAndAssets().getWidget(0));
-    Ode.getInstance().getWorkColumns().insert(Ode.getInstance().getStructureAndAssets(), 3);
-    Ode.getInstance().getStructureAndAssets().insert(BlockSelectorBox.getBlockSelectorBox(), 0);
+    final Ode ode = Ode.getInstance();
+
+    ode.getWorkColumns().remove(Ode.getInstance().getStructureAndAssets().getWidget(0));
+    ode.getWorkColumns().insert(Ode.getInstance().getStructureAndAssets(), 3);
+    ode.getStructureAndAssets().insert(BlockSelectorBox.getBlockSelectorBox(), 0);
     BlockSelectorBox.getBlockSelectorBox().setVisible(false);
     AssetListBox.getAssetListBox().setVisible(true);
 
@@ -671,7 +652,9 @@ public final class YaBlocksEditor extends FileEditor
   /*
    * Perform a hideChaff of Blockly
    */
-  public void hideChaff () {blocksArea.hideChaff();}
+  public void hideChaff() {
+    blocksArea.hideChaff();
+  }
 
   @Override
   public void resize() {
@@ -708,7 +691,7 @@ public final class YaBlocksEditor extends FileEditor
 
   @Override
   public void onComponentTypeAdded(List<String> componentTypes) {
-    blocksArea.populateComponentTypes(COMPONENT_DATABASE.getComponentsJSONString());
+    blocksArea.populateComponentTypes(componentDatabase.getComponentsJSONString());
     blocksArea.verifyAllBlocks();
   }
 
@@ -719,13 +702,13 @@ public final class YaBlocksEditor extends FileEditor
 
   @Override
   public void onComponentTypeRemoved(Map<String, String> componentTypes) {
-    blocksArea.populateComponentTypes(COMPONENT_DATABASE.getComponentsJSONString());
+    blocksArea.populateComponentTypes(componentDatabase.getComponentsJSONString());
     blocksArea.verifyAllBlocks();
   }
 
   @Override
   public void onResetDatabase() {
-    blocksArea.populateComponentTypes(COMPONENT_DATABASE.getComponentsJSONString());
+    blocksArea.populateComponentTypes(componentDatabase.getComponentsJSONString());
     blocksArea.verifyAllBlocks();
   }
 
