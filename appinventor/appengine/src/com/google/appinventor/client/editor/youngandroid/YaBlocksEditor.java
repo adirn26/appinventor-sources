@@ -51,6 +51,7 @@ import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -158,10 +159,10 @@ public final class YaBlocksEditor extends FileEditor
   // FileEditor methods
 
   @Override
-  public void loadFile(final Command afterFileLoaded) {
+  public void loadFile(final AsyncCallback<ChecksumedLoadFile> callback) {
     final long projectId = getProjectId();
     final String fileId = getFileId();
-    OdeAsyncCallback<ChecksumedLoadFile> callback = new OdeAsyncCallback<ChecksumedLoadFile>(
+    OdeAsyncCallback<ChecksumedLoadFile> handler = new OdeAsyncCallback<ChecksumedLoadFile>(
         MESSAGES.loadError()) {
       @Override
       public void onSuccess(ChecksumedLoadFile result) {
@@ -183,9 +184,7 @@ public final class YaBlocksEditor extends FileEditor
         }
         loadComplete = true;
         selectedDrawer = null;
-        if (afterFileLoaded != null) {
-          afterFileLoaded.execute();
-        }
+        callback.onSuccess(result);
       }
 
       @Override
@@ -194,9 +193,26 @@ public final class YaBlocksEditor extends FileEditor
           Ode.getInstance().recordCorruptProject(projectId, fileId, caught.getMessage());
         }
         super.onFailure(caught);
+        callback.onFailure(caught);
       }
     };
-    Ode.getInstance().getProjectService().load2(projectId, fileId, callback);
+    Ode.getInstance().getProjectService().load2(projectId, fileId, handler);
+  }
+
+  @Override
+  public void loadFile(final Command afterFileLoaded) {
+    loadFile(new AsyncCallback<ChecksumedLoadFile>() {
+      @Override
+      public void onFailure(Throwable throwable) {
+      }
+
+      @Override
+      public void onSuccess(ChecksumedLoadFile checksumedLoadFile) {
+        if (afterFileLoaded != null) {
+          afterFileLoaded.execute();
+        }
+      }
+    });
   }
 
   @Override

@@ -66,6 +66,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
 
 import java.util.ArrayList;
@@ -224,13 +225,13 @@ public final class YaFormEditor extends SimpleEditor
   // FileEditor methods
 
   @Override
-  public void loadFile(final Command afterFileLoaded) {
+  public void loadFile(final AsyncCallback<ChecksumedLoadFile> callback) {
     final long projectId = getProjectId();
     final String fileId = getFileId();
-    OdeAsyncCallback<ChecksumedLoadFile> callback =
+    OdeAsyncCallback<ChecksumedLoadFile> handler =
         new OdeAsyncCallback<ChecksumedLoadFile>(MESSAGES.loadError()) {
       @Override
-      public void onSuccess(ChecksumedLoadFile result) {
+      public void onSuccess(final ChecksumedLoadFile result) {
         String contents;
         try {
           contents = result.getContent();
@@ -245,11 +246,15 @@ public final class YaFormEditor extends SimpleEditor
             try {
               onFileLoaded(fileContentHolder.getFileContent());
             } catch (IllegalArgumentException e) {
+              callback.onFailure(e);
               return;
             }
-            if (afterFileLoaded != null) {
-              afterFileLoaded.execute();
+            try {
+              result.setContent(fileContentHolder.getFileContent());
+            } catch (ChecksumedFileException e) {
+              // ???
             }
+            callback.onSuccess(result);
           }
         });
       }
@@ -260,9 +265,25 @@ public final class YaFormEditor extends SimpleEditor
           Ode.getInstance().recordCorruptProject(projectId, fileId, caught.getMessage());
         }
         super.onFailure(caught);
+        callback.onFailure(caught);
       }
     };
-    Ode.getInstance().getProjectService().load2(projectId, fileId, callback);
+    Ode.getInstance().getProjectService().load2(projectId, fileId, handler);
+  }
+
+  public void loadFile(final Command afterFileLoaded) {
+    loadFile(new AsyncCallback<ChecksumedLoadFile>() {
+      @Override
+      public void onFailure(Throwable throwable) {
+      }
+
+      @Override
+      public void onSuccess(ChecksumedLoadFile checksumedLoadFile) {
+        if (afterFileLoaded != null) {
+          afterFileLoaded.execute();
+        }
+      }
+    });
   }
 
   @Override
