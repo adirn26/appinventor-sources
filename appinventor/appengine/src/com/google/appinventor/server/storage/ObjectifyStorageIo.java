@@ -1756,6 +1756,7 @@ public class ObjectifyStorageIo implements  StorageIo {
 
     ByteArrayOutputStream zipFile = new ByteArrayOutputStream();
     final ZipOutputStream out = new ZipOutputStream(zipFile);
+    out.setLevel(9);
     out.setComment("Built with MIT App Inventor");
 
     try {
