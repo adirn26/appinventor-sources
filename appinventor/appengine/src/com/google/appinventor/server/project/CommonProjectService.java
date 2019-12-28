@@ -1,6 +1,6 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2017 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -210,6 +211,14 @@ public abstract class CommonProjectService {
   public ChecksumedLoadFile load2(String userId, long projectId, String fileId) throws ChecksumedFileException {
     ChecksumedLoadFile retval = new ChecksumedLoadFile();
     retval.setContent(storageIo.downloadFile(userId, projectId, fileId, StorageUtil.DEFAULT_CHARSET));
+    return retval;
+  }
+
+  public List<ChecksumedLoadFile> load3(String userId, long projectId, List<String> fileIds) throws ChecksumedFileException {
+    List<ChecksumedLoadFile> retval = new ArrayList<>();
+    for (String fileId : fileIds) {
+      retval.add(new ChecksumedLoadFile(storageIo.downloadFile(userId, projectId, fileId, StorageUtil.DEFAULT_CHARSET)));
+    }
     return retval;
   }
 

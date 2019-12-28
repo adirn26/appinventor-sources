@@ -226,6 +226,8 @@ public interface ProjectService extends RemoteService {
    */
   ChecksumedLoadFile load2(long projectId, String fileId) throws ChecksumedFileException;
 
+  List<ChecksumedLoadFile> load3(long projectId, List<String> fileId) throws ChecksumedFileException;
+
   /**
    * Attempt to record the project Id and error message when we detect a corruption
    * while loading a project.

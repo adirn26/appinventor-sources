@@ -559,6 +559,12 @@ public class ProjectServiceImpl extends OdeRemoteServiceServlet implements Proje
     return getProjectRpcImpl(userId, projectId).load2(userId, projectId, fileId);
   }
 
+  @Override
+  public List<ChecksumedLoadFile> load3(long projectId, List<String> fileIds) throws ChecksumedFileException {
+    final String userId = userInfoProvider.getUserId();
+    return getProjectRpcImpl(userId, projectId).load3(userId, projectId, fileIds);
+  }
+
   /**
    * Attempt to record the project Id and error message when we detect a corruption
    * while loading a project.

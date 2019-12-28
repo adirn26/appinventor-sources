@@ -271,6 +271,21 @@ public final class YaFormEditor extends SimpleEditor
     Ode.getInstance().getProjectService().load2(projectId, fileId, handler);
   }
 
+  public void loadFile(String contents, final AsyncCallback<String> callback) {
+    final FileContentHolder fileContentHolder = new FileContentHolder(contents);
+    upgradeFile(fileContentHolder, new Command() {
+      @Override
+      public void execute() {
+        try {
+          onFileLoaded(fileContentHolder.getFileContent());
+          callback.onSuccess(fileContentHolder.getFileContent());
+        } catch (IllegalArgumentException e) {
+          callback.onFailure(e);
+        }
+      }
+    });
+  }
+
   public void loadFile(final Command afterFileLoaded) {
     loadFile(new AsyncCallback<ChecksumedLoadFile>() {
       @Override

@@ -32,6 +32,13 @@ public class ChecksumedLoadFile implements Serializable {
   private String content;
   private String checksum;
 
+  public ChecksumedLoadFile() {
+  }
+
+  public ChecksumedLoadFile(String content) throws ChecksumedFileException {
+    this.setContent(content);
+  }
+
   public String getContent() throws ChecksumedFileException {
     MessageDigest md = null;
     try {

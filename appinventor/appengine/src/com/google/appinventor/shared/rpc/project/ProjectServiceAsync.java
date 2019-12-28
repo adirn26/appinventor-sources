@@ -199,4 +199,5 @@ public interface ProjectServiceAsync {
    */
   void log(String message, AsyncCallback<Void> callback);
 
+  void load3(long projectId, List<String> fileId, AsyncCallback<List<ChecksumedLoadFile>> async);
 }

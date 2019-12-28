@@ -215,6 +215,24 @@ public final class YaBlocksEditor extends FileEditor
     });
   }
 
+  public void loadFile(String content, final AsyncCallback<String> callback) {
+    String formJson = myFormEditor.preUpgradeJsonString();
+    try {
+      blocksArea.loadBlocksContent(formJson, content);
+      blocksArea.addChangeListener(this);
+    } catch (LoadBlocksException e) {
+      setBlocksDamaged(fullFormName);
+      ErrorReporter.reportError(MESSAGES.blocksNotSaved(fullFormName));
+      loadComplete = true;
+      selectedDrawer = null;
+      callback.onFailure(e);
+      return;
+    }
+    loadComplete = true;
+    selectedDrawer = null;
+    callback.onSuccess(content);
+  }
+
   @Override
   public String getTabText() {
     return MESSAGES.blocksEditorTabName(blocksNode.getFormName());
