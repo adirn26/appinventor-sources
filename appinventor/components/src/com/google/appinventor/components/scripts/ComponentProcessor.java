@@ -142,7 +142,7 @@ public abstract class ComponentProcessor extends AbstractProcessor {
   private static final String OUTPUT_PACKAGE = "";
 
   private static final String MISSING_SIMPLE_PROPERTY_ANNOTATION =
-      "Designer property %s does not have a corresponding @SimpleProperty annotation.";
+      "Designer property %s does not have a corresponding @SimpleProperty annotation in %s.";
   private static final String BOXED_TYPE_ERROR =
       "Found use of boxed type %s. Please use the primitive type %s instead";
 
@@ -2524,6 +2524,7 @@ public abstract class ComponentProcessor extends AbstractProcessor {
             // name. This is an overridden property without the SimpleProperty annotation and we
             // need to remove it.
             componentInfo.properties.remove(propertyName);
+            componentInfo.designerProperties.remove(propertyName);
           }
         }
       } else {
@@ -2599,7 +2600,7 @@ public abstract class ComponentProcessor extends AbstractProcessor {
     if (!propertyNames.isEmpty()) {
       for (String propertyName : propertyNames) {
         messager.printMessage(Kind.ERROR,
-            String.format(MISSING_SIMPLE_PROPERTY_ANNOTATION, propertyName),
+            String.format(MISSING_SIMPLE_PROPERTY_ANNOTATION, propertyName, componentInfo.name),
             propertyElementsToCheck.get(propertyName));
       }
     }
