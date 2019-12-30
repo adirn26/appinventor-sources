@@ -8,10 +8,16 @@ package com.google.appinventor.client.editor.youngandroid.properties;
 
 import static com.google.appinventor.client.Ode.MESSAGES;
 
+import com.google.appinventor.client.Ode;
+import com.google.appinventor.client.editor.FileEditor;
 import com.google.appinventor.client.editor.simple.components.FormChangeListener;
 import com.google.appinventor.client.editor.simple.components.MockComponent;
+import com.google.appinventor.client.editor.youngandroid.YaBlocksEditor;
 import com.google.appinventor.client.editor.youngandroid.YaFormEditor;
+import com.google.appinventor.client.editor.youngandroid.YaProjectEditor;
 import com.google.appinventor.client.widgets.properties.AdditionalChoicePropertyEditor;
+import com.google.appinventor.client.widgets.properties.EditableProperty;
+import com.google.appinventor.shared.rpc.project.youngandroid.YoungAndroidBlocksNode;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.Command;
@@ -33,32 +39,27 @@ public final class YoungAndroidComponentSelectorPropertyEditor
 
   private final ListWithNone choices;
 
-  // The YaFormEditor associated with this property editor.
-  private final YaFormEditor editor;
-
   // The types of component that can be chosen
   private final Set<String> componentTypes;
 
+  // The YaFormEditor currently associated with this property editor.
+  private YaFormEditor currentFormEditor = null;
+
   /**
    * Creates a new property editor for selecting a component.
-   *
-   * @param editor the editor that this property editor belongs to
    */
-  public YoungAndroidComponentSelectorPropertyEditor(YaFormEditor editor) {
-    this(editor, null);
+  public YoungAndroidComponentSelectorPropertyEditor() {
+    this(null);
   }
 
   /**
    * Creates a new property editor for selecting a component, where the
    * user chooses among components of one or more component types.
    *
-   * @param editor the editor that this property editor belongs to
    * @param componentTypes types of component that can be selected, or null if
    *        all types of components can be selected.
    */
-  public YoungAndroidComponentSelectorPropertyEditor(final YaFormEditor editor,
-      Set<String> componentTypes) {
-    this.editor = editor;
+  public YoungAndroidComponentSelectorPropertyEditor(Set<String> componentTypes) {
     this.componentTypes = componentTypes;
 
     VerticalPanel selectorPanel = new VerticalPanel();
@@ -94,19 +95,10 @@ public final class YoungAndroidComponentSelectorPropertyEditor
       public void setSelectedIndex(int index) {
         componentsList.setSelectedIndex(index);
       }
-    });
 
-    // At this point, the editor hasn't finished loading.
-    // Use a DeferredCommand to finish the initialization after the editor has finished loading.
-    DeferredCommand.addCommand(new Command() {
       @Override
-      public void execute() {
-        if (editor.isLoadComplete()) {
-          finishInitialization();
-        } else {
-          // Editor still hasn't finished loading.
-          DeferredCommand.addCommand(this);
-        }
+      public void clear() {
+        componentsList.clear();
       }
     });
 
@@ -114,16 +106,6 @@ public final class YoungAndroidComponentSelectorPropertyEditor
   }
 
   private void finishInitialization() {
-    // Add a FormChangeListener so we'll know when components are added/removed/renamed.
-    editor.getForm().addFormChangeListener(this);
-
-    // Fill choices with the components.
-    for (MockComponent component : editor.getComponents().values()) {
-      if (componentTypes == null || componentTypes.contains(component.getType())) {
-        choices.addItem(component.getName());
-      }
-    }
-
     // Previous version had a bug where the value could be accidentally saved as "None".
     // If the property value is "None" and choices doesn't contain the value "None", set the
     // property value to "".
@@ -134,8 +116,45 @@ public final class YoungAndroidComponentSelectorPropertyEditor
   }
 
   @Override
+  public void setProperty(EditableProperty property) {
+    super.setProperty(property);
+    FileEditor activeEditor = Ode.getInstance().getCurrentFileEditor();
+    YaFormEditor newEditor = null;
+    if (activeEditor instanceof YaFormEditor) {
+      newEditor = (YaFormEditor) activeEditor;
+    } else if (activeEditor instanceof YaBlocksEditor) {
+      YaProjectEditor yaProjectEditor = (YaProjectEditor) activeEditor.getProjectEditor();
+      newEditor = yaProjectEditor.getFormFileEditor(((YoungAndroidBlocksNode) activeEditor.getFileNode()).getFormName());
+    } else {
+      throw new IllegalStateException();
+    }
+    if (newEditor == currentFormEditor) {
+      return;
+    }
+    if (currentFormEditor != null) {
+      currentFormEditor.getForm().removeFormChangeListener(this);
+    }
+    newEditor.getForm().addFormChangeListener(this);
+    currentFormEditor = newEditor;
+    reloadList();
+  }
+
+  private void reloadList() {
+    choices.clear();
+
+    // Fill choices with the components.
+    for (MockComponent component : currentFormEditor.getComponents().values()) {
+      if (componentTypes == null || componentTypes.contains(component.getType())) {
+        choices.addItem(component.getName());
+      }
+    }
+
+    finishInitialization();
+  }
+
+  @Override
   public void orphan() {
-    editor.getForm().removeFormChangeListener(this);
+    currentFormEditor.getForm().removeFormChangeListener(this);
     super.orphan();
   }
 

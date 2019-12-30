@@ -204,7 +204,7 @@ A two-dimensional touch-sensitive rectangular panel on which drawing can
 {:id="Canvas.FontSize" .number} *FontSize*
 : Specifies the font size of text drawn on the Canvas.
 
-{:id="Canvas.Height" .number .bo} *Height*
+{:id="Canvas.Height" .number} *Height*
 : Specifies the `Canvas`'s vertical height, measured in pixels.
 
 {:id="Canvas.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -234,7 +234,7 @@ A two-dimensional touch-sensitive rectangular panel on which drawing can
 : Specifies whether the `Canvas` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `Canvas` is showing and `false`{:.logic.block} if hidden.
 
-{:id="Canvas.Width" .number .bo} *Width*
+{:id="Canvas.Width" .number} *Width*
 : Specifies the horizontal width of the `Canvas`, measured in pixels.
 
 {:id="Canvas.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -363,7 +363,7 @@ A 'sprite' that can be placed on a [`Canvas`](#Canvas), where it can react to to
 : The `ImageSprite`'s heading in degrees above the positive x-axis. Zero degrees is toward the right
  of the screen; 90 degrees is toward the top of the screen.
 
-{:id="ImageSprite.Height" .number .bo} *Height*
+{:id="ImageSprite.Height" .number} *Height*
 : The height of the ImageSprite in pixels.
 
 {:id="ImageSprite.Interval" .number} *Interval*
@@ -385,7 +385,7 @@ A 'sprite' that can be placed on a [`Canvas`](#Canvas), where it can react to to
 {:id="ImageSprite.Visible" .boolean} *Visible*
 : Sets whether sprite should be visible.
 
-{:id="ImageSprite.Width" .number .bo} *Width*
+{:id="ImageSprite.Width" .number} *Width*
 : The width of the ImageSprite in pixels.
 
 {:id="ImageSprite.X" .number} *X*

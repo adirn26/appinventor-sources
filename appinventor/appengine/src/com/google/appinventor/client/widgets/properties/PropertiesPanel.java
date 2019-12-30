@@ -6,7 +6,7 @@
 
 package com.google.appinventor.client.widgets.properties;
 
-import com.google.appinventor.client.editor.simple.components.MockComponent;
+import com.google.appinventor.client.editor.simple.components.utils.PropertiesUtil;
 import com.google.appinventor.client.explorer.project.ComponentDatabaseChangeListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -21,14 +21,20 @@ import java.util.Map;
  */
 public class PropertiesPanel extends Composite implements ComponentDatabaseChangeListener {
 
+  private static final PropertiesPanel INSTANCE = new PropertiesPanel();
+
   // UI elements
   private final VerticalPanel panel;
   private final Label componentName;
 
+  public static PropertiesPanel get() {
+    return INSTANCE;
+  }
+
   /**
    * Creates a new properties panel.
    */
-  public PropertiesPanel() {
+  private PropertiesPanel() {
     // Initialize UI
     VerticalPanel outerPanel = new VerticalPanel();
     outerPanel.setWidth("100%");
@@ -43,6 +49,8 @@ public class PropertiesPanel extends Composite implements ComponentDatabaseChang
     outerPanel.add(panel);
 
     initWidget(outerPanel);
+
+    this.setSize("100%", "!00%");
   }
 
   /**
@@ -54,10 +62,10 @@ public class PropertiesPanel extends Composite implements ComponentDatabaseChang
     Label label = new Label(property.getCaption());
     label.setStyleName("ode-PropertyLabel");
     panel.add(label);
-    PropertyEditor editor = property.getEditor();
+    PropertyEditor editor = PropertiesUtil.getPropertyEditor(property);
     // Since UIObject#setStyleName(String) clears existing styles, only
     // style the editor if it hasn't already been styled during instantiation.
-    if(!editor.getStyleName().contains("PropertyEditor")) {
+    if (!editor.getStyleName().contains("PropertyEditor")) {
       editor.setStyleName("ode-PropertyEditor");
     }
     panel.add(editor);
@@ -69,6 +77,7 @@ public class PropertiesPanel extends Composite implements ComponentDatabaseChang
   public void clear() {
     panel.clear();
     componentName.setText("");
+    PropertiesUtil.willRefreshProperties();
   }
 
   /**
@@ -85,7 +94,7 @@ public class PropertiesPanel extends Composite implements ComponentDatabaseChang
   /**
    * Set the label at the top of the properties panel. Note that you have
    * to do this after calling setProperties because it clears the label!
-   * @param name
+   * @param name The text to be shown above the properties.
    */
   public void setPropertiesCaption(String name) {
     componentName.setText(name);

@@ -171,6 +171,9 @@ public class ImageSprite extends Sprite {
    */
   @Override
   @SimpleProperty
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_Y_DIM_MEASURE,
+      defaultValue = LENGTH_PREFERRED + "",
+      editorArgs = {"auto", "fill", "px"})
   public void Height(int height) {
     heightHint = height;
     registerChange();
@@ -197,6 +200,9 @@ public class ImageSprite extends Sprite {
    */
   @Override
   @SimpleProperty
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_X_DIM_MEASURE,
+      defaultValue = LENGTH_PREFERRED + "",
+      editorArgs = {"auto", "fill", "px"})
   public void Width(int width) {
     widthHint = width;
     registerChange();

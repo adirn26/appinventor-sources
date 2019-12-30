@@ -163,7 +163,7 @@ A `FeatureCollection` groups one or more map features together. Any events that 
  such strings, it is recommended to load the feature collection from assets or the web using
  the [`Source`](#FeatureCollection.Source) property.
 
-{:id="FeatureCollection.Height" .number .bo} *Height*
+{:id="FeatureCollection.Height" .number} *Height*
 : Specifies the `FeatureCollection`'s vertical height, measured in pixels.
 
 {:id="FeatureCollection.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -177,7 +177,7 @@ A `FeatureCollection` groups one or more map features together. Any events that 
 : Specifies whether the `FeatureCollection` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `FeatureCollection` is showing and `false`{:.logic.block} if hidden.
 
-{:id="FeatureCollection.Width" .number .bo} *Width*
+{:id="FeatureCollection.Width" .number} *Width*
 : Specifies the horizontal width of the `FeatureCollection`, measured in pixels.
 
 {:id="FeatureCollection.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -407,7 +407,7 @@ A two-dimensional container that renders map tiles in the background and allows 
  feature's `Visible`{:.getter.block} property). This list also includes any features created on
  the `Map` by calls to [`FeatureFromDescription`](#Map.FeatureFromDescription).
 
-{:id="Map.Height" .number .bo} *Height*
+{:id="Map.Height" .number} *Height*
 : Specifies the `Map`'s vertical height, measured in pixels.
 
 {:id="Map.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -469,7 +469,7 @@ A two-dimensional container that renders map tiles in the background and allows 
 : Specifies whether the `Map` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `Map` is showing and `false`{:.logic.block} if hidden.
 
-{:id="Map.Width" .number .bo} *Width*
+{:id="Map.Width" .number} *Width*
 : Specifies the horizontal width of the `Map`, measured in pixels.
 
 {:id="Map.WidthPercent" .number .wo .bo} *WidthPercent*

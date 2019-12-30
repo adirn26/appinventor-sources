@@ -6,6 +6,8 @@
 
 package com.google.appinventor.client.widgets.properties;
 
+import static com.google.appinventor.client.Ode.MESSAGES;
+
 import com.google.appinventor.client.Ode;
 import com.google.appinventor.client.widgets.DropDownButton;
 import com.google.appinventor.client.widgets.DropDownButton.DropDownItem;
@@ -22,8 +24,6 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import java.util.List;
-
-import static com.google.appinventor.client.Ode.MESSAGES;
 
 /**
  * Property editor for color properties.
@@ -88,8 +88,8 @@ public abstract class ColorChoicePropertyEditor extends PropertyEditor {
     }
 
     static String getHtmlDescription(String rgbString, String name) {
-      return "<span style=\"background:#" + rgbString + "; border:1px solid black; " +
-          "width:1em; height:1em\">&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;" + name;
+      return "<span style=\"background:#" + rgbString + "; border:1px solid black; "
+          + "width:1em; height:1em\">&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;" + name;
     }
   }
 
@@ -110,7 +110,7 @@ public abstract class ColorChoicePropertyEditor extends PropertyEditor {
   /**
    * The default value of the color, shown when Default is selected.
    */
-  private final String defaultValue;
+  private String defaultValue = "000000";
 
   // Widget Name
   private static final String WIDGET_NAME = "Color Choice Property Editor";
@@ -142,8 +142,8 @@ public abstract class ColorChoicePropertyEditor extends PropertyEditor {
    * @param colors  colors to be shown in property editor - must not be
    *                {@code null} or empty
    */
-  public ColorChoicePropertyEditor(final Color[] colors, final String hexPrefix, final String defaultValue) {
-    this(colors, hexPrefix, defaultValue, false);
+  public ColorChoicePropertyEditor(final Color[] colors, final String hexPrefix) {
+    this(colors, hexPrefix, false);
   }
 
   /**
@@ -152,26 +152,19 @@ public abstract class ColorChoicePropertyEditor extends PropertyEditor {
    * @param colors  language specific hex number prefix
    * @param hexPrefix  colors to be shown in property editor - must not be
    *                   {@code null} or empty
-   * @param defaultValue  the color of the default value, for display in the editor only
    * @param advanced  specify true to show a button for the advanced picker
    */
-  public ColorChoicePropertyEditor(final Color[] colors, final String hexPrefix, final String defaultValue, final boolean advanced) {
+  public ColorChoicePropertyEditor(final Color[] colors, final String hexPrefix,
+      final boolean advanced) {
     this.hexPrefix = hexPrefix;
     this.colors = colors;
     this.advanced = advanced;
-    if (defaultValue.startsWith(hexPrefix)) {
-      this.defaultValue = defaultValue.substring(defaultValue.length()-6);  // Take last 6 digits (assumes RRGGBB format)
-      this.defaultValueArgb = Long.valueOf("FF" + this.defaultValue, 16) & 0xFFFFFFFFL;
-    } else {
-      this.defaultValue = defaultValue;
-      this.defaultValueArgb = Long.valueOf(defaultValue, 10) & 0xFFFFFFFFL;
-    }
 
     // Initialize UI
     List<DropDownItem> choices = Lists.newArrayList();
     for (final Color color : colors) {
-      final String description = color.argbValue == 0 ?
-          Color.getHtmlDescription(this.defaultValue, color.name) : color.getHtmlDescription();
+      final String description = color.argbValue == 0
+          ? Color.getHtmlDescription(this.defaultValue, color.name) : color.getHtmlDescription();
       choices.add(new DropDownItem(WIDGET_NAME, description, new Command() {
         @Override
         public void execute() {
@@ -179,15 +172,16 @@ public abstract class ColorChoicePropertyEditor extends PropertyEditor {
           setMultipleValues(false);
           if (color.argbValue == 0) {
             // Handle default value specially to prevent sending #x00000000 to the REPL...
-            property.setValue(defaultValue, isMultiple);
+            property.setValue(property.getDefaultValue(), isMultiple);
           } else {
             property.setValue(hexPrefix + color.alphaString + color.rgbString, isMultiple);
           }
           if (advanced) {
-            String customColor = color.argbValue == 0 ?
-                Color.ALPHA_OPAQUE + ColorChoicePropertyEditor.this.defaultValue :
-                color.alphaString + color.rgbString;
-            selectedColorMenu.replaceLastItem(new DropDownItem(WIDGET_NAME, makeCustomHTML(customColor), showCustomPicker));
+            String customColor = color.argbValue == 0
+                ? Color.ALPHA_OPAQUE + ColorChoicePropertyEditor.this.defaultValue
+                : color.alphaString + color.rgbString;
+            selectedColorMenu.replaceLastItem(new DropDownItem(WIDGET_NAME,
+                makeCustomHTML(customColor), showCustomPicker));
           }
         }
       }));
@@ -219,7 +213,8 @@ public abstract class ColorChoicePropertyEditor extends PropertyEditor {
           String color = getColor().toUpperCase();
           dismissAdvancedPicker();
           property.setValue(color);
-          selectedColorMenu.replaceLastItem(new DropDownItem(WIDGET_NAME, makeCustomHTML(color), showCustomPicker));
+          selectedColorMenu.replaceLastItem(new DropDownItem(WIDGET_NAME, makeCustomHTML(color),
+              showCustomPicker));
         }
       });
 
@@ -242,11 +237,31 @@ public abstract class ColorChoicePropertyEditor extends PropertyEditor {
         }
       }));
     }
-    selectedColorMenu = new DropDownButton(WIDGET_NAME, colors[0].getHtmlDescription(), choices, false,  true, false);
+    selectedColorMenu = new DropDownButton(WIDGET_NAME, colors[0].getHtmlDescription(), choices,
+        false,  true, false);
 
     selectedColorMenu.setStylePrimaryName("ode-ColorChoicePropertyEditor");
 
     initWidget(selectedColorMenu);
+  }
+
+  @Override
+  public void setProperty(EditableProperty property) {
+    super.setProperty(property);
+    defaultValue = property.getDefaultValue();
+    if (defaultValue.startsWith(hexPrefix)) {
+      // Take last 6 digits (assumes RRGGBB format)
+      defaultValue = defaultValue.substring(defaultValue.length() - 6);
+      defaultValueArgb = Long.valueOf("FF" + defaultValue, 16) & 0xFFFFFFFFL;
+    } else {
+      defaultValueArgb = Long.valueOf(defaultValue, 10) & 0xFFFFFFFFL;
+    }
+    for (int i = 0; i < colors.length; i++) {
+      if (colors[i].argbValue == 0) {
+        selectedColorMenu.setItemHTML(i, Color.getHtmlDescription(defaultValue,
+            colors[i].name));
+      }
+    }
   }
 
   @Override

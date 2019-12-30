@@ -45,14 +45,14 @@ public final class YoungAndroidColorChoicePropertyEditor extends ColorChoiceProp
   /**
    * Creates a new property editor for color RGB values.
    */
-  public YoungAndroidColorChoicePropertyEditor(String defaultValue) {
-    super(YA_COLORS, "&H", defaultValue, true);
+  public YoungAndroidColorChoicePropertyEditor() {
+    super(YA_COLORS, "&H", true);
   }
 
   /**
    * Creates a new property editor for a specific array of color RGB values.
    */
-  public YoungAndroidColorChoicePropertyEditor(Color[] colors, String defaultValue) {
-    super(colors, "&H", defaultValue);
+  public YoungAndroidColorChoicePropertyEditor(Color[] colors) {
+    super(colors, "&H");
   }
 }

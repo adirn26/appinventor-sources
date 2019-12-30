@@ -30,7 +30,6 @@ import com.google.appinventor.client.editor.simple.components.MockVisibleCompone
 import com.google.appinventor.client.editor.simple.components.utils.PropertiesUtil;
 import com.google.appinventor.client.editor.simple.palette.DropTargetProvider;
 import com.google.appinventor.client.editor.simple.palette.SimpleComponentDescriptor;
-import com.google.appinventor.client.editor.simple.palette.SimplePalettePanel;
 import com.google.appinventor.client.editor.youngandroid.palette.YoungAndroidPalettePanel;
 import com.google.appinventor.client.explorer.SourceStructureExplorer;
 import com.google.appinventor.client.explorer.project.ComponentDatabaseChangeListener;
@@ -120,10 +119,6 @@ public final class YaFormEditor extends SimpleEditor
   // References to other panels that we need to control.
   private final SourceStructureExplorer sourceStructureExplorer;
 
-  // Panels that are used as the content of the palette and properties boxes.
-  private final YoungAndroidPalettePanel palettePanel;
-  private final PropertiesPanel designProperties;
-
   private YoungAndroidPalettePanel.Filter paletteFilter = null;
 
   // UI elements
@@ -208,7 +203,7 @@ public final class YaFormEditor extends SimpleEditor
     designProperties.setSize("100%", "100%");
 
     // Create palettePanel, which will be used as the content of the PaletteBox.
-    palettePanel = YoungAndroidPalettePanel.get();
+    YoungAndroidPalettePanel palettePanel = YoungAndroidPalettePanel.get();
     palettePanel.setActiveEditor(this);
     palettePanel.loadComponents();
     componentDatabaseChangeListeners.add(palettePanel);
@@ -286,6 +281,7 @@ public final class YaFormEditor extends SimpleEditor
     });
   }
 
+  @Override
   public void loadFile(final Command afterFileLoaded) {
     loadFile(new AsyncCallback<ChecksumedLoadFile>() {
       @Override
@@ -554,7 +550,8 @@ public final class YaFormEditor extends SimpleEditor
 
     // END OF PROJECT TAGGING CODE
 
-    preUpgradeJsonString =  propertiesObject.toJson(); // [lyn, [2014/10/13] remember pre-upgrade component versions.
+    // [lyn, [2014/10/13] remember pre-upgrade component versions.
+    preUpgradeJsonString =  propertiesObject.toJson();
     if (YoungAndroidFormUpgrader.upgradeSourceProperties(propertiesObject.getProperties())) {
       String upgradedContent = YoungAndroidSourceAnalyzer.generateSourceFile(propertiesObject);
       fileContentHolder.setFileContent(upgradedContent);
@@ -565,16 +562,16 @@ public final class YaFormEditor extends SimpleEditor
         }
       } else {
         Ode.getInstance().getProjectService().save(Ode.getInstance().getSessionId(),
-          getProjectId(), getFileId(), upgradedContent,
-          new OdeAsyncCallback<Long>(MESSAGES.saveError()) {
-            @Override
-            public void onSuccess(Long result) {
-              // Execute the afterUpgradeComplete command if one was given.
-              if (afterUpgradeComplete != null) {
-                afterUpgradeComplete.execute();
-              }
-            }
-          });
+            getProjectId(), getFileId(), upgradedContent,
+              new OdeAsyncCallback<Long>(MESSAGES.saveError()) {
+                @Override
+                public void onSuccess(Long result) {
+                  // Execute the afterUpgradeComplete command if one was given.
+                  if (afterUpgradeComplete != null) {
+                    afterUpgradeComplete.execute();
+                  }
+                }
+              });
       }
     } else {
       // No upgrade was necessary.
@@ -659,7 +656,7 @@ public final class YaFormEditor extends SimpleEditor
     } else {
       paletteFilter = null;
     }
-    palettePanel.setFilter(paletteFilter, true);
+    YoungAndroidPalettePanel.get().setFilter(paletteFilter, true);
   }
 
   private native String getShownComponents(String subsetString)/*-{
@@ -799,6 +796,7 @@ public final class YaFormEditor extends SimpleEditor
     MockComponent selectedComponent = form.getLastSelectedComponent();
 
     // Set the palette box's content.
+    YoungAndroidPalettePanel palettePanel = YoungAndroidPalettePanel.get();
     palettePanel.setActiveEditor(this);
     PaletteBox paletteBox = PaletteBox.getPaletteBox();
     paletteBox.setContent(palettePanel);
@@ -814,7 +812,7 @@ public final class YaFormEditor extends SimpleEditor
 
     // Set the properties box's content.
     PropertiesBox propertiesBox = PropertiesBox.getPropertiesBox();
-    propertiesBox.setContent(designProperties);
+    propertiesBox.setContent(PropertiesPanel.get());
     updatePropertiesPanel(form.getSelectedComponents(), true);
     propertiesBox.setVisible(true);
   }
@@ -860,8 +858,6 @@ public final class YaFormEditor extends SimpleEditor
             name,
             property.getDefaultValue(),
             property.getCaption(),
-            PropertiesUtil.createPropertyEditor(property.getEditorType(),
-                property.getDefaultValue(), this, property.getEditorArgs()),
             property.getType(),
             property.getEditorType(),
             property.getEditorArgs()
@@ -887,6 +883,7 @@ public final class YaFormEditor extends SimpleEditor
     if (selected) {
       selectedProperties.addPropertyChangeListener(this);
     }
+    final PropertiesPanel designProperties = PropertiesPanel.get();
     designProperties.setProperties(selectedProperties);
     if (components.size() > 1) {
       designProperties.setPropertiesCaption(components.size() + " components selected");

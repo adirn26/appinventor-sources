@@ -1,18 +1,29 @@
 // -*- mode: java; c-basic-offset: 2; -*-
 // Copyright 2009-2011 Google, All Rights reserved
-// Copyright 2011-2012 MIT, All rights reserved
+// Copyright 2011-2019 MIT, All rights reserved
 // Released under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
 package com.google.appinventor.client.widgets.properties;
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.ui.Composite;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Superclass for all property editors.
  *
  */
 public abstract class PropertyEditor extends Composite {
+
+  // A list of editors that need to be updated on the next pass.
+  private static List<PropertyEditor> editorsPendingUpdate = new LinkedList<>();
+
+  // A pending update command, if any
+  private static Scheduler.ScheduledCommand pendingUpdate = null;
 
   /**
    * Flag to indicate that the property editor is being used to edit multiple components.
@@ -40,15 +51,16 @@ public abstract class PropertyEditor extends Composite {
    *
    * @param property  property to be edited by this editor
    */
-  public final void setProperty(EditableProperty property) {
+  public void setProperty(EditableProperty property) {
     this.property = property;
-    updateValue();
+    property.setEditor(this);
+    scheduleUpdateValue(this);
   }
 
   /**
    * Called when this property editor is being orphaned.
    *
-   * If a property editor listens for events, it should override this method so
+   * <p>If a property editor listens for events, it should override this method so
    * it will stop listening for events after it has been orphaned.
    */
   public void orphan() {
@@ -92,5 +104,24 @@ public abstract class PropertyEditor extends Composite {
    */
   public boolean isMultipleValues() {
     return multiple;
+  }
+
+  private static void scheduleUpdateValue(final PropertyEditor editor) {
+    editorsPendingUpdate.add(editor);
+    if (pendingUpdate != null) {
+      return;
+    }
+    pendingUpdate = new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        List<PropertyEditor> editors = new ArrayList<>(editorsPendingUpdate);
+        editorsPendingUpdate.clear();
+        pendingUpdate = null;
+        for (PropertyEditor editor : editors) {
+          editor.updateValue();
+        }
+      }
+    };
+    Scheduler.get().scheduleDeferred(pendingUpdate);
   }
 }

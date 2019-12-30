@@ -443,6 +443,9 @@ public final class MockForm extends MockContainer {
     phoneWidget.add(notchPanel);
     initComponent(phoneWidget);
 
+    addProperty(PROPERTY_NAME_WIDTH, "" + PORTRAIT_WIDTH);
+    addProperty(PROPERTY_NAME_HEIGHT, "" + LENGTH_PREFERRED);
+
     // Set up the initial state of the vertical alignment property editor and its dropdowns
     try {
       myVAlignmentPropertyEditor = PropertiesUtil.getVAlignmentEditor(properties);
@@ -708,16 +711,6 @@ public final class MockForm extends MockContainer {
   @Override
   public String getVisibleTypeName() {
     return VISIBLE_TYPE;
-  }
-
-  @Override
-  protected void addWidthHeightProperties() {
-    addProperty(PROPERTY_NAME_WIDTH, "" + PORTRAIT_WIDTH, null,
-        PropertyTypeConstants.PROPERTY_TYPE_LENGTH, null,
-        new YoungAndroidLengthPropertyEditor());
-    addProperty(PROPERTY_NAME_HEIGHT, "" + LENGTH_PREFERRED, null,
-        PropertyTypeConstants.PROPERTY_TYPE_LENGTH, null,
-        new YoungAndroidLengthPropertyEditor());
   }
 
   @Override

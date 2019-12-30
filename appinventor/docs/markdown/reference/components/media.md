@@ -124,7 +124,7 @@ A special-purpose button. When the user taps an `ImagePicker`, the device's imag
  serif, monospace, or custom font typeface. To add a custom typeface,
  upload a .ttf file to the project's media.
 
-{:id="ImagePicker.Height" .number .bo} *Height*
+{:id="ImagePicker.Height" .number} *Height*
 : Specifies the `ImagePicker`'s vertical height, measured in pixels.
 
 {:id="ImagePicker.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -164,7 +164,7 @@ A special-purpose button. When the user taps an `ImagePicker`, the device's imag
 : Specifies whether the `ImagePicker` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `ImagePicker` is showing and `false`{:.logic.block} if hidden.
 
-{:id="ImagePicker.Width" .number .bo} *Width*
+{:id="ImagePicker.Width" .number} *Width*
 : Specifies the horizontal width of the `ImagePicker`, measured in pixels.
 
 {:id="ImagePicker.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -583,7 +583,7 @@ A multimedia component capable of playing videos. When the application is run, t
 {:id="VideoPlayer.FullScreen" .boolean .bo} *FullScreen*
 : Sets whether the video should be shown in fullscreen or not.
 
-{:id="VideoPlayer.Height" .number .bo} *Height*
+{:id="VideoPlayer.Height" .number} *Height*
 : Specifies the component's vertical height, measured in pixels.
 
 {:id="VideoPlayer.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -602,7 +602,7 @@ A multimedia component capable of playing videos. When the application is run, t
 : Sets the volume property to a number between 0 and 100. Values less than 0
  will be treated as 0, and values greater than 100 will be treated as 100.
 
-{:id="VideoPlayer.Width" .number .bo} *Width*
+{:id="VideoPlayer.Width" .number} *Width*
 : Specifies the component's horizontal width, measured in pixels.
 
 {:id="VideoPlayer.WidthPercent" .number .wo .bo} *WidthPercent*

@@ -38,7 +38,7 @@ The Chart component plots data originating from it's attached Data components. F
  Chart Type is set to a Chart with an Axis (applies for Area, Bar, Line,
  Scatter Chart types).
 
-{:id="Chart.Height" .number .bo} *Height*
+{:id="Chart.Height" .number} *Height*
 : Specifies the `Chart`'s vertical height, measured in pixels.
 
 {:id="Chart.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -75,7 +75,7 @@ The Chart component plots data originating from it's attached Data components. F
 : Specifies whether the `Chart` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `Chart` is showing and `false`{:.logic.block} if hidden.
 
-{:id="Chart.Width" .number .bo} *Width*
+{:id="Chart.Width" .number} *Width*
 : Specifies the horizontal width of the `Chart`, measured in pixels.
 
 {:id="Chart.WidthPercent" .number .wo .bo} *WidthPercent*

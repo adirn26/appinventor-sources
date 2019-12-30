@@ -96,6 +96,8 @@ public abstract class AndroidViewComponent extends VisibleComponent {
    */
   @Override
   @SimpleProperty(description = "Specifies the horizontal width of the %type%, measured in pixels.")
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_X_DIM_MEASURE,
+      defaultValue = LENGTH_PREFERRED + "")
   public void Width(int width) {
     container.setChildWidth(this, width);
     lastSetWidth = width;
@@ -186,6 +188,8 @@ public abstract class AndroidViewComponent extends VisibleComponent {
    */
   @Override
   @SimpleProperty(description = "Specifies the vertical height of the %type%, measured in pixels.")
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_Y_DIM_MEASURE,
+      defaultValue = LENGTH_PREFERRED + "")
   public void Height(int height) {
     container.setChildHeight(this, height);
     lastSetHeight = height;

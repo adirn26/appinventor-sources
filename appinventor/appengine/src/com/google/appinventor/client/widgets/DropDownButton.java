@@ -265,6 +265,10 @@ public class DropDownButton extends TextButton {
     }
   }
 
+  public void setItemHTML(int index, String html) {
+    items.get(index).setHTML(html);
+  }
+
   public void replaceLastItem(DropDownItem item) {
     menu.removeItem(items.get(items.size()-1));
     items.remove(items.size()-1);

@@ -7,6 +7,7 @@
 package com.google.appinventor.client.widgets.properties;
 
 import static com.google.appinventor.client.Ode.MESSAGES;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -120,7 +121,7 @@ public abstract class AdditionalChoicePropertyEditor extends PropertyEditor {
    */
   protected void openAdditionalChoiceDialog() {
     popup.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
-      public void setPosition(int offsetWidth, int offsetHeight){
+      public void setPosition(int offsetWidth, int offsetHeight) {
         // adjust the x and y positions so that the entire panel
         // is on-screen
         int xPosition = getAbsoluteLeft();

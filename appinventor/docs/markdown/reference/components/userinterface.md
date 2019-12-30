@@ -61,7 +61,7 @@ Button with the ability to detect clicks. Many aspects of its appearance can be 
  serif, monospace, or custom font typeface. To add a custom typeface,
  upload a .ttf file to the project's media.
 
-{:id="Button.Height" .number .bo} *Height*
+{:id="Button.Height" .number} *Height*
 : Specifies the `Button`'s vertical height, measured in pixels.
 
 {:id="Button.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -98,7 +98,7 @@ Button with the ability to detect clicks. Many aspects of its appearance can be 
 : Specifies whether the `Button` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `Button` is showing and `false`{:.logic.block} if hidden.
 
-{:id="Button.Width" .number .bo} *Width*
+{:id="Button.Width" .number} *Width*
 : Specifies the horizontal width of the `Button`, measured in pixels.
 
 {:id="Button.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -175,7 +175,7 @@ None
 : Specifies the text font face of the `CheckBox` as default, serif, sans
  serif, or monospace.
 
-{:id="CheckBox.Height" .number .bo} *Height*
+{:id="CheckBox.Height" .number} *Height*
 : Specifies the `CheckBox`'s vertical height, measured in pixels.
 
 {:id="CheckBox.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -193,7 +193,7 @@ None
 : Specifies whether the `CheckBox` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `CheckBox` is showing and `false`{:.logic.block} if hidden.
 
-{:id="CheckBox.Width" .number .bo} *Width*
+{:id="CheckBox.Width" .number} *Width*
 : Specifies the horizontal width of the `CheckBox`, measured in pixels.
 
 {:id="CheckBox.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -259,7 +259,7 @@ A button that, when clicked on, launches a popup dialog to allow the user to sel
  serif, monospace, or custom font typeface. To add a custom typeface,
  upload a .ttf file to the project's media.
 
-{:id="DatePicker.Height" .number .bo} *Height*
+{:id="DatePicker.Height" .number} *Height*
 : Specifies the `DatePicker`'s vertical height, measured in pixels.
 
 {:id="DatePicker.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -305,7 +305,7 @@ A button that, when clicked on, launches a popup dialog to allow the user to sel
 : Specifies whether the `DatePicker` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `DatePicker` is showing and `false`{:.logic.block} if hidden.
 
-{:id="DatePicker.Width" .number .bo} *Width*
+{:id="DatePicker.Width" .number} *Width*
 : Specifies the horizontal width of the `DatePicker`, measured in pixels.
 
 {:id="DatePicker.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -375,7 +375,7 @@ Component for displaying images and basic animations.
 {:id="Image.Clickable" .boolean} *Clickable*
 : Specifies whether the image should be clickable or not.
 
-{:id="Image.Height" .number .bo} *Height*
+{:id="Image.Height" .number} *Height*
 : Specifies the `Image`'s vertical height, measured in pixels.
 
 {:id="Image.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -398,7 +398,7 @@ Component for displaying images and basic animations.
 : Specifies whether the `Image` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `Image` is showing and `false`{:.logic.block} if hidden.
 
-{:id="Image.Width" .number .bo} *Width*
+{:id="Image.Width" .number} *Width*
 : Specifies the horizontal width of the `Image`, measured in pixels.
 
 {:id="Image.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -465,7 +465,7 @@ Labels are components used to show text.
  designer, where the margins are defined for the arrangement, not just for individual
  labels.
 
-{:id="Label.Height" .number .bo} *Height*
+{:id="Label.Height" .number} *Height*
 : Specifies the `Label`'s vertical height, measured in pixels.
 
 {:id="Label.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -488,7 +488,7 @@ Labels are components used to show text.
 : Specifies whether the `Label` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `Label` is showing and `false`{:.logic.block} if hidden.
 
-{:id="Label.Width" .number .bo} *Width*
+{:id="Label.Width" .number} *Width*
 : Specifies the horizontal width of the `Label`, measured in pixels.
 
 {:id="Label.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -556,7 +556,7 @@ A button that, when clicked on, displays a list of texts for the user to choose 
  serif, monospace, or custom font typeface. To add a custom typeface,
  upload a .ttf file to the project's media.
 
-{:id="ListPicker.Height" .number .bo} *Height*
+{:id="ListPicker.Height" .number} *Height*
 : Specifies the `ListPicker`'s vertical height, measured in pixels.
 
 {:id="ListPicker.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -613,7 +613,7 @@ A button that, when clicked on, displays a list of texts for the user to choose 
 : Specifies whether the `ListPicker` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `ListPicker` is showing and `false`{:.logic.block} if hidden.
 
-{:id="ListPicker.Width" .number .bo} *Width*
+{:id="ListPicker.Width" .number} *Width*
 : Specifies the horizontal width of the `ListPicker`, measured in pixels.
 
 {:id="ListPicker.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -693,7 +693,7 @@ This is a visible component that displays a list of text and image elements in y
 : Specifies the label's text's font face as default, serif, sans
  serif, or monospace.
 
-{:id="ListView.Height" .number .bo} *Height*
+{:id="ListView.Height" .number} *Height*
 : Specifies the `ListView`'s vertical height, measured in pixels.
 
 {:id="ListView.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -753,7 +753,7 @@ This is a visible component that displays a list of text and image elements in y
 : Specifies whether the `ListView` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `ListView` is showing and `false`{:.logic.block} if hidden.
 
-{:id="ListView.Width" .number .bo} *Width*
+{:id="ListView.Width" .number} *Width*
 : Specifies the horizontal width of the `ListView`, measured in pixels.
 
 {:id="ListView.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -924,7 +924,7 @@ Users enter passwords in a password text box component, which hides the text tha
 : The text font face of the `PasswordTextBox`. Valid values are `0` (default), `1` (serif), `2` (sans
  serif), or `3` (monospace).
 
-{:id="PasswordTextBox.Height" .number .bo} *Height*
+{:id="PasswordTextBox.Height" .number} *Height*
 : Specifies the `PasswordTextBox`'s vertical height, measured in pixels.
 
 {:id="PasswordTextBox.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -961,7 +961,7 @@ Users enter passwords in a password text box component, which hides the text tha
 : Specifies whether the `PasswordTextBox` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `PasswordTextBox` is showing and `false`{:.logic.block} if hidden.
 
-{:id="PasswordTextBox.Width" .number .bo} *Width*
+{:id="PasswordTextBox.Width" .number} *Width*
 : Specifies the horizontal width of the `PasswordTextBox`, measured in pixels.
 
 {:id="PasswordTextBox.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -1252,7 +1252,7 @@ This class is used to display a `Slider`.
 : Specifies whether the `Slider` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `Slider` is showing and `false`{:.logic.block} if hidden.
 
-{:id="Slider.Width" .number .bo} *Width*
+{:id="Slider.Width" .number} *Width*
 : Specifies the horizontal width of the `Slider`, measured in pixels.
 
 {:id="Slider.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -1294,7 +1294,7 @@ A `Spinner` component that displays a dialog with a list of elements. These elem
 {:id="Spinner.ElementsFromString" .text .wo} *ElementsFromString*
 : Set the list of choices from a string of comma-separated values.
 
-{:id="Spinner.Height" .number .bo} *Height*
+{:id="Spinner.Height" .number} *Height*
 : Specifies the `Spinner`'s vertical height, measured in pixels.
 
 {:id="Spinner.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -1317,7 +1317,7 @@ A `Spinner` component that displays a dialog with a list of elements. These elem
 : Specifies whether the `Spinner` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `Spinner` is showing and `false`{:.logic.block} if hidden.
 
-{:id="Spinner.Width" .number .bo} *Width*
+{:id="Spinner.Width" .number} *Width*
 : Specifies the horizontal width of the `Spinner`, measured in pixels.
 
 {:id="Spinner.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -1374,7 +1374,7 @@ A `Spinner` component that displays a dialog with a list of elements. These elem
 : Specifies the text font face of the `Switch` as default, serif, sans
  serif, or monospace.
 
-{:id="Switch.Height" .number .bo} *Height*
+{:id="Switch.Height" .number} *Height*
 : Specifies the `Switch`'s vertical height, measured in pixels.
 
 {:id="Switch.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -1407,7 +1407,7 @@ A `Spinner` component that displays a dialog with a list of elements. These elem
 : Specifies whether the `Switch` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `Switch` is showing and `false`{:.logic.block} if hidden.
 
-{:id="Switch.Width" .number .bo} *Width*
+{:id="Switch.Width" .number} *Width*
 : Specifies the horizontal width of the `Switch`, measured in pixels.
 
 {:id="Switch.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -1487,7 +1487,7 @@ Users enter text in a text box component.
 : The text font face of the `TextBox`. Valid values are `0` (default), `1` (serif), `2` (sans
  serif), or `3` (monospace).
 
-{:id="TextBox.Height" .number .bo} *Height*
+{:id="TextBox.Height" .number} *Height*
 : Specifies the `TextBox`'s vertical height, measured in pixels.
 
 {:id="TextBox.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -1530,7 +1530,7 @@ Users enter text in a text box component.
 : Specifies whether the `TextBox` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `TextBox` is showing and `false`{:.logic.block} if hidden.
 
-{:id="TextBox.Width" .number .bo} *Width*
+{:id="TextBox.Width" .number} *Width*
 : Specifies the horizontal width of the `TextBox`, measured in pixels.
 
 {:id="TextBox.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -1596,7 +1596,7 @@ A button that, when clicked on, opens a dialog to allow the user to select a tim
  serif, monospace, or custom font typeface. To add a custom typeface,
  upload a .ttf file to the project's media.
 
-{:id="TimePicker.Height" .number .bo} *Height*
+{:id="TimePicker.Height" .number} *Height*
 : Specifies the `TimePicker`'s vertical height, measured in pixels.
 
 {:id="TimePicker.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -1644,7 +1644,7 @@ A button that, when clicked on, opens a dialog to allow the user to select a tim
 : Specifies whether the `TimePicker` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `TimePicker` is showing and `false`{:.logic.block} if hidden.
 
-{:id="TimePicker.Width" .number .bo} *Width*
+{:id="TimePicker.Width" .number} *Width*
 : Specifies the horizontal width of the `TimePicker`, measured in pixels.
 
 {:id="TimePicker.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -1749,7 +1749,7 @@ Component for viewing Web pages.
 : Determines whether to follow links when they are tapped in the `WebViewer`. If you follow
  links, you can use [`GoBack`](#WebViewer.GoBack) and [`GoForward`](#WebViewer.GoForward) to navigate the browser history.
 
-{:id="WebViewer.Height" .number .bo} *Height*
+{:id="WebViewer.Height" .number} *Height*
 : Specifies the `WebViewer`'s vertical height, measured in pixels.
 
 {:id="WebViewer.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -1782,7 +1782,7 @@ Component for viewing Web pages.
 : Gets the `WebView`'s String, which is viewable through Javascript in the `WebView` as the
  `window.AppInventor` object.
 
-{:id="WebViewer.Width" .number .bo} *Width*
+{:id="WebViewer.Width" .number} *Width*
 : Specifies the horizontal width of the `WebViewer`, measured in pixels.
 
 {:id="WebViewer.WidthPercent" .number .wo .bo} *WidthPercent*

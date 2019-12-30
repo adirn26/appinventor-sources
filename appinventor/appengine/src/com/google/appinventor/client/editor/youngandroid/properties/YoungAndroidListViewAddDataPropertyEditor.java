@@ -9,8 +9,6 @@ import static com.google.appinventor.client.Ode.MESSAGES;
 
 import com.google.appinventor.client.Ode;
 
-import com.google.appinventor.client.editor.youngandroid.YaFormEditor;
-
 import com.google.appinventor.client.explorer.project.Project;
 
 import com.google.appinventor.client.widgets.properties.PropertyEditor;
@@ -64,13 +62,10 @@ public class YoungAndroidListViewAddDataPropertyEditor extends PropertyEditor {
   private List<JSONObject> items;
   private List<JSONObject> itemsCopy;
 
-  private YaFormEditor editor;
-
-  public YoungAndroidListViewAddDataPropertyEditor(final YaFormEditor editor) {
+  public YoungAndroidListViewAddDataPropertyEditor() {
     items = new ArrayList<JSONObject>();
     itemsCopy = new ArrayList<JSONObject>();
     addData = new Button("Click to Add/Delete Data");
-    this.editor = editor;
 
     createButton();
   }
@@ -162,7 +157,8 @@ public class YoungAndroidListViewAddDataPropertyEditor extends PropertyEditor {
     }
 
     Column<JSONObject, String> createImageSelectionDropDown(final String columnKey) {
-      Project project = Ode.getInstance().getProjectManager().getProject(editor.getProjectId());
+      long projectId = Ode.getInstance().getCurrentYoungAndroidProjectId();
+      Project project = Ode.getInstance().getProjectManager().getProject(projectId);
       YoungAndroidAssetsFolder assetsFolder = ((YoungAndroidProjectNode) project.getRootNode()).getAssetsFolder();
       List<String> choices = new ArrayList<String>();
       choices.add(0, "None");

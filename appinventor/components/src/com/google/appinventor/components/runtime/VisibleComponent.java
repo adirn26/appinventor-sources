@@ -6,9 +6,11 @@
 
 package com.google.appinventor.components.runtime;
 
+import com.google.appinventor.components.annotations.DesignerProperty;
 import com.google.appinventor.components.annotations.PropertyCategory;
 import com.google.appinventor.components.annotations.SimpleObject;
 import com.google.appinventor.components.annotations.SimpleProperty;
+import com.google.appinventor.components.common.PropertyTypeConstants;
 
 /**
  * Superclass of visible components in the runtime libraries.
@@ -36,6 +38,8 @@ public abstract class VisibleComponent implements Component {
    * @param width  width property used by the layout
    */
   @SimpleProperty
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_X_DIM_MEASURE,
+      defaultValue = LENGTH_PREFERRED + "")
   public abstract void Width(int width);
 
   /**
@@ -66,6 +70,8 @@ public abstract class VisibleComponent implements Component {
    * @param height  height property used by the layout
    */
   @SimpleProperty
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_Y_DIM_MEASURE,
+      defaultValue = LENGTH_PREFERRED + "")
   public abstract void Height(int height);
 
   /**

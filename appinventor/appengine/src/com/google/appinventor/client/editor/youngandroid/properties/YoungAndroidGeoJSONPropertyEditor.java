@@ -6,10 +6,10 @@
 package com.google.appinventor.client.editor.youngandroid.properties;
 
 import com.google.appinventor.client.Ode;
-import com.google.appinventor.client.editor.youngandroid.YaFormEditor;
 import com.google.appinventor.client.explorer.project.Project;
 import com.google.appinventor.client.explorer.project.ProjectChangeListener;
 import com.google.appinventor.client.widgets.properties.AdditionalChoicePropertyEditor;
+import com.google.appinventor.client.widgets.properties.EditableProperty;
 import com.google.appinventor.client.wizards.FileUploadWizard;
 import com.google.appinventor.client.wizards.FileUploadWizard.FileUploadedCallback;
 import com.google.appinventor.client.wizards.UrlImportWizard;
@@ -23,8 +23,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ListBox;
@@ -37,13 +35,10 @@ public class YoungAndroidGeoJSONPropertyEditor extends AdditionalChoicePropertyE
     implements ProjectChangeListener {
   private final ListBox assetsList;
   private final ListWithNone choices;
-  private final YoungAndroidAssetsFolder assetsFolder;
+  private YoungAndroidAssetsFolder assetsFolder = null;
+  private Project currentProject = null;
 
-  public YoungAndroidGeoJSONPropertyEditor(final YaFormEditor editor) {
-    Project project = Ode.getInstance().getProjectManager().getProject(editor.getProjectId());
-    assetsFolder = ((YoungAndroidProjectNode) project.getRootNode()).getAssetsFolder();
-    project.addProjectChangeListener(this);
-
+  public YoungAndroidGeoJSONPropertyEditor() {
     VerticalPanel selectorPanel = new VerticalPanel();
     assetsList = new ListBox();
     assetsList.setVisibleItemCount(10);
@@ -76,17 +71,12 @@ public class YoungAndroidGeoJSONPropertyEditor extends AdditionalChoicePropertyE
       public void addItem(String item) {
         assetsList.addItem(item);
       }
-    });
 
-    // Fill choices with assets.
-    if (assetsFolder != null) {
-      for (ProjectNode node : assetsFolder.getChildren()) {
-        String lowerCaseName = node.getName();
-        if (lowerCaseName.endsWith(".json") || lowerCaseName.endsWith(".geojson")) {
-          choices.addItem(node.getName());
-        }
+      @Override
+      public void clear() {
+        assetsList.clear();
       }
-    }
+    });
 
     Button addButton = new Button(MESSAGES.addButton());
     addButton.setWidth("100%");
@@ -125,17 +115,6 @@ public class YoungAndroidGeoJSONPropertyEditor extends AdditionalChoicePropertyE
     selectorPanel.add(urlButton);
     selectorPanel.setWidth("100%");
 
-    DeferredCommand.addCommand(new Command() {
-      @Override
-      public void execute() {
-        if (editor.isLoadComplete()) {
-          finishInitialization();
-        } else {
-          DeferredCommand.addCommand(this);
-        }
-      }
-    });
-
     initAdditionalChoicePanel(selectorPanel);
   }
 
@@ -144,6 +123,42 @@ public class YoungAndroidGeoJSONPropertyEditor extends AdditionalChoicePropertyE
     if (value.equals("None") && !choices.containsValue(value)) {
       property.setValue("");
     }
+  }
+
+  @Override
+  public void setProperty(EditableProperty property) {
+    super.setProperty(property);
+    reloadAssets();
+  }
+
+  private void reloadAssets() {
+    choices.clear();
+
+    Project project = Ode.getInstance().getProjectManager().getProject(Ode.getInstance().getCurrentYoungAndroidProjectId());
+    YoungAndroidProjectNode rootNode = (YoungAndroidProjectNode)
+        project.getRootNode();
+    YoungAndroidAssetsFolder assets = rootNode.getAssetsFolder();
+    if (assets == assetsFolder) {
+      return;  // on current project
+    }
+    if (currentProject != null) {
+      currentProject.removeProjectChangeListener(this);
+    }
+    currentProject = project;
+    project.addProjectChangeListener(this);
+    assetsFolder = assets;
+
+    // Fill choices with assets.
+    if (assetsFolder != null) {
+      for (ProjectNode node : assetsFolder.getChildren()) {
+        String lowerCaseName = node.getName();
+        if (lowerCaseName.endsWith(".json") || lowerCaseName.endsWith(".geojson")) {
+          choices.addItem(node.getName());
+        }
+      }
+    }
+
+    finishInitialization();
   }
 
   @Override

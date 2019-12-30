@@ -66,7 +66,7 @@ Table of Contents:
  integer.  If an Image has been set, the color change will not be visible
  until the Image is removed.
 
-{:id="HorizontalArrangement.Height" .number .bo} *Height*
+{:id="HorizontalArrangement.Height" .number} *Height*
 : Specifies the `HorizontalArrangement`'s vertical height, measured in pixels.
 
 {:id="HorizontalArrangement.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -80,7 +80,7 @@ Table of Contents:
 : Specifies whether the `HorizontalArrangement` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `HorizontalArrangement` is showing and `false`{:.logic.block} if hidden.
 
-{:id="HorizontalArrangement.Width" .number .bo} *Width*
+{:id="HorizontalArrangement.Width" .number} *Width*
 : Specifies the horizontal width of the `HorizontalArrangement`, measured in pixels.
 
 {:id="HorizontalArrangement.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -128,7 +128,7 @@ A formatting element in which to place components that should be displayed from 
  integer.  If an Image has been set, the color change will not be visible
  until the Image is removed.
 
-{:id="HorizontalScrollArrangement.Height" .number .bo} *Height*
+{:id="HorizontalScrollArrangement.Height" .number} *Height*
 : Specifies the `HorizontalScrollArrangement`'s vertical height, measured in pixels.
 
 {:id="HorizontalScrollArrangement.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -142,7 +142,7 @@ A formatting element in which to place components that should be displayed from 
 : Specifies whether the `HorizontalScrollArrangement` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `HorizontalScrollArrangement` is showing and `false`{:.logic.block} if hidden.
 
-{:id="HorizontalScrollArrangement.Width" .number .bo} *Width*
+{:id="HorizontalScrollArrangement.Width" .number} *Width*
 : Specifies the horizontal width of the `HorizontalScrollArrangement`, measured in pixels.
 
 {:id="HorizontalScrollArrangement.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -193,7 +193,7 @@ Use a table arrangement component to display a group of components in a tabular 
 {:id="TableArrangement.Columns" .number .do} *Columns*
 : Determines the number of columns in the table.
 
-{:id="TableArrangement.Height" .number .bo} *Height*
+{:id="TableArrangement.Height" .number} *Height*
 : Specifies the `TableArrangement`'s vertical height, measured in pixels.
 
 {:id="TableArrangement.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -207,7 +207,7 @@ Use a table arrangement component to display a group of components in a tabular 
 : Specifies whether the `TableArrangement` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `TableArrangement` is showing and `false`{:.logic.block} if hidden.
 
-{:id="TableArrangement.Width" .number .bo} *Width*
+{:id="TableArrangement.Width" .number} *Width*
 : Specifies the horizontal width of the `TableArrangement`, measured in pixels.
 
 {:id="TableArrangement.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -278,7 +278,7 @@ None
  integer.  If an Image has been set, the color change will not be visible
  until the Image is removed.
 
-{:id="VerticalArrangement.Height" .number .bo} *Height*
+{:id="VerticalArrangement.Height" .number} *Height*
 : Specifies the `VerticalArrangement`'s vertical height, measured in pixels.
 
 {:id="VerticalArrangement.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -292,7 +292,7 @@ None
 : Specifies whether the `VerticalArrangement` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `VerticalArrangement` is showing and `false`{:.logic.block} if hidden.
 
-{:id="VerticalArrangement.Width" .number .bo} *Width*
+{:id="VerticalArrangement.Width" .number} *Width*
 : Specifies the horizontal width of the `VerticalArrangement`, measured in pixels.
 
 {:id="VerticalArrangement.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -340,7 +340,7 @@ A formatting element in which to place components that should be displayed one b
  integer.  If an Image has been set, the color change will not be visible
  until the Image is removed.
 
-{:id="VerticalScrollArrangement.Height" .number .bo} *Height*
+{:id="VerticalScrollArrangement.Height" .number} *Height*
 : Specifies the `VerticalScrollArrangement`'s vertical height, measured in pixels.
 
 {:id="VerticalScrollArrangement.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -354,7 +354,7 @@ A formatting element in which to place components that should be displayed one b
 : Specifies whether the `VerticalScrollArrangement` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `VerticalScrollArrangement` is showing and `false`{:.logic.block} if hidden.
 
-{:id="VerticalScrollArrangement.Width" .number .bo} *Width*
+{:id="VerticalScrollArrangement.Width" .number} *Width*
 : Specifies the horizontal width of the `VerticalScrollArrangement`, measured in pixels.
 
 {:id="VerticalScrollArrangement.WidthPercent" .number .wo .bo} *WidthPercent*

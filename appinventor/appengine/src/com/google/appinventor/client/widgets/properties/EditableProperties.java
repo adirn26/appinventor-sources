@@ -7,6 +7,7 @@
 package com.google.appinventor.client.widgets.properties;
 
 import com.google.appinventor.client.properties.Properties;
+import com.google.appinventor.shared.simple.ComponentDatabaseInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,18 +41,25 @@ public class EditableProperties extends Properties<EditableProperty> {
   }
 
   /**
+   * Adds a new property using the given property definition.
+   *
+   * @param definition The property definition from simple components
+   * @param type The type of the property; see {@code TYPE_*} constants in {@link EditableProperty}
+   */
+  public void addProperty(ComponentDatabaseInterface.PropertyDefinition definition, int type) {
+    addProperty(new EditableProperty(this, definition, type));
+  }
+
+  /**
    * Adds a new property.
    *
    * @param name  property name
    * @param defaultValue  default value of property
    * @param caption property caption for use in the ui
-   * @param editor  property editor
    * @param type  type of property; see {@code TYPE_*} constants in {@link EditableProperty}
    */
-
-  public void addProperty(String name, String defaultValue, String caption,
-      PropertyEditor editor, int type, String editorType, String[] editorArgs) {
-    addProperty(new EditableProperty(this, name, defaultValue, caption, editor, type, editorType, editorArgs));
+  public void addProperty(String name, String defaultValue, String caption, int type, String editorType, String[] editorArgs) {
+    addProperty(new EditableProperty(this, name, defaultValue, caption, type, editorType, editorArgs));
   }
 
   @Override

@@ -9,10 +9,11 @@ package com.google.appinventor.client.editor.youngandroid.properties;
 import static com.google.appinventor.client.Ode.MESSAGES;
 
 import com.google.appinventor.client.Ode;
-import com.google.appinventor.client.editor.youngandroid.YaFormEditor;
 import com.google.appinventor.client.explorer.project.Project;
 import com.google.appinventor.client.explorer.project.ProjectChangeListener;
+import com.google.appinventor.client.explorer.project.ProjectManager;
 import com.google.appinventor.client.widgets.properties.AdditionalChoicePropertyEditor;
+import com.google.appinventor.client.widgets.properties.EditableProperty;
 import com.google.appinventor.client.wizards.FileUploadWizard;
 import com.google.appinventor.client.wizards.FileUploadWizard.FileUploadedCallback;
 import com.google.appinventor.shared.rpc.project.FileNode;
@@ -25,8 +26,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ListBox;
@@ -43,19 +42,12 @@ public final class YoungAndroidAssetSelectorPropertyEditor extends AdditionalCho
 
   private final ListWithNone choices;
 
-  private final YoungAndroidAssetsFolder assetsFolder;
+  private YoungAndroidAssetsFolder assetsFolder;
 
   /**
    * Creates a new property editor for selecting a Young Android asset.
-   *
-   * @param editor the editor that this property editor belongs to
    */
-  public YoungAndroidAssetSelectorPropertyEditor(final YaFormEditor editor) {
-    Project project = Ode.getInstance().getProjectManager().getProject(editor.getProjectId());
-    assetsFolder = ((YoungAndroidProjectNode) project.getRootNode()).getAssetsFolder();
-    project.addProjectChangeListener(this);
-
-    VerticalPanel selectorPanel = new VerticalPanel();
+  public YoungAndroidAssetSelectorPropertyEditor() {
     assetsList = new ListBox();
     assetsList.setVisibleItemCount(10);
     assetsList.setWidth("100%");
@@ -65,6 +57,7 @@ public final class YoungAndroidAssetSelectorPropertyEditor extends AdditionalCho
         setOkButtonEnabled(true);
       }
     });
+    VerticalPanel selectorPanel = new VerticalPanel();
     selectorPanel.add(assetsList);
 
     choices = new ListWithNone(MESSAGES.noneCaption(), new ListWithNone.ListBoxWrapper() {
@@ -87,14 +80,12 @@ public final class YoungAndroidAssetSelectorPropertyEditor extends AdditionalCho
       public void setSelectedIndex(int index) {
         assetsList.setSelectedIndex(index);
       }
-    });
 
-    // Fill choices with the assets.
-    if (assetsFolder != null) {
-      for (ProjectNode node : assetsFolder.getChildren()) {
-        choices.addItem(node.getName());
+      @Override
+      public void clear() {
+        assetsList.clear();
       }
-    }
+    });
 
     Button addButton = new Button(MESSAGES.addButton());
     addButton.setWidth("100%");
@@ -117,20 +108,6 @@ public final class YoungAndroidAssetSelectorPropertyEditor extends AdditionalCho
     selectorPanel.add(addButton);
     selectorPanel.setWidth("100%");
 
-    // At this point, the editor hasn't finished loading.
-    // Use a DeferredCommand to finish the initialization after the editor has finished loading.
-    DeferredCommand.addCommand(new Command() {
-      @Override
-      public void execute() {
-        if (editor.isLoadComplete()) {
-          finishInitialization();
-        } else {
-          // Editor still hasn't finished loading.
-          DeferredCommand.addCommand(this);
-        }
-      }
-    });
-
     initAdditionalChoicePanel(selectorPanel);
   }
 
@@ -142,6 +119,38 @@ public final class YoungAndroidAssetSelectorPropertyEditor extends AdditionalCho
     if (value.equals("None") && !choices.containsValue(value)) {
       property.setValue("");
     }
+  }
+
+  @Override
+  public void setProperty(EditableProperty property) {
+    super.setProperty(property);
+    reloadAssets();
+  }
+
+  private void reloadAssets() {
+    Ode ode = Ode.getInstance();
+    ProjectManager pm = ode.getProjectManager();
+    Project project = pm.getProject(ode.getCurrentYoungAndroidProjectId());
+    YoungAndroidAssetsFolder assets = ((YoungAndroidProjectNode) project.getRootNode())
+        .getAssetsFolder();
+    if (assets == assetsFolder) {
+      return;  // no project switch
+    }
+    if (assetsFolder != null) {
+      pm.getProject(assetsFolder.getProjectId())
+          .removeProjectChangeListener(this);
+    }
+    assetsFolder = assets;
+    pm.getProject(project.getProjectId()).addProjectChangeListener(this);
+
+    choices.clear();
+
+    // Fill choices with the assets.
+    for (ProjectNode node : assetsFolder.getChildren()) {
+      choices.addItem(node.getName());
+    }
+
+    finishInitialization();
   }
 
   @Override

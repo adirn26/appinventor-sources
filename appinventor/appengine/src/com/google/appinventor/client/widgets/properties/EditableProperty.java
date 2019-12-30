@@ -6,7 +6,9 @@
 
 package com.google.appinventor.client.widgets.properties;
 
+import com.google.appinventor.client.ComponentsTranslation;
 import com.google.appinventor.client.properties.Property;
+import com.google.appinventor.shared.simple.ComponentDatabaseInterface;
 
 /**
  * Property for display in a {@link PropertiesPanel}.
@@ -51,8 +53,8 @@ public final class EditableProperty extends Property {
   // Type of property
   private int type;
 
-  // Property editor for use in properties panel
-  private final PropertyEditor editor;
+  // Definition of the property
+  private final ComponentDatabaseInterface.PropertyDefinition definition;
 
   // Property caption for use in properties panel
   private final String caption;
@@ -63,6 +65,28 @@ public final class EditableProperty extends Property {
   // Additional arguments for the editor
   private final String[] editorArgs;
 
+  // Property editor for use in properties panel
+  private PropertyEditor editor;
+
+  /**
+   * Create a new editable property from the given property definition.
+   *
+   * @param properties The EditableProperties that contains this EditableProperty
+   * @param definition The definition of the property retrieved from simple components
+   * @param type The type of the property; see {@code TYPE_*} constants
+   */
+  public EditableProperty(EditableProperties properties,
+      ComponentDatabaseInterface.PropertyDefinition definition, int type) {
+    super(definition.getName(), definition.getDefaultValue());
+
+    this.properties = properties;
+    this.type = type;
+    this.caption = ComponentsTranslation.getPropertyName(definition.getCaption());
+    this.definition = definition;
+    this.editorType = definition.getEditorType();
+    this.editorArgs = definition.getEditorArgs();
+  }
+
   /**
    * Creates a new property.
    *
@@ -72,26 +96,23 @@ public final class EditableProperty extends Property {
    * @param defaultValue property's default value
    *                     (will also be its initial current value)
    * @param caption  property's caption for use in the UI
-   * @param editor  property editor
    * @param type  type of property; see {@code TYPE_*} constants
    */
   public EditableProperty(EditableProperties properties, String name, String defaultValue,
-      String caption, PropertyEditor editor, int type, String editorType, String[] editorArgs) {
+      String caption, int type) {
     super(name, defaultValue);
 
     this.properties = properties;
     this.type = type;
-    this.editor = editor;
     this.caption = caption;
-    this.editorType = editorType;
-    this.editorArgs = editorArgs;
-
-    editor.setProperty(this);
+    this.definition = null;
+    this.editorType = "";
+    this.editorArgs = new String[0];
   }
 
   public EditableProperty(EditableProperties properties, String name, String defaultValue,
       int type) {
-    this(properties, name, defaultValue, name, new TextPropertyEditor(), type, "", null);
+    this(properties, name, defaultValue, name, type, "", null);
   }
 
   /**
@@ -106,7 +127,19 @@ public final class EditableProperty extends Property {
    */
   public EditableProperty(EditableProperties properties, String name, String defaultValue,
       int type, String editorType, String[] editorArgs) {
-    this(properties, name, defaultValue, name, new TextPropertyEditor(), type, editorType, editorArgs);
+    this(properties, name, defaultValue, name, type, editorType, editorArgs);
+  }
+
+  public EditableProperty(EditableProperties properties, String name, String defaultValue,
+      String caption, int type, String editorType, String[] editorArgs) {
+    super(name, defaultValue);
+
+    this.properties = properties;
+    this.type = type;
+    this.caption = caption;
+    this.definition = null;
+    this.editorType = editorType;
+    this.editorArgs = editorArgs;
   }
 
   /**
@@ -132,6 +165,8 @@ public final class EditableProperty extends Property {
   /**
    * Sets the value of the property, optionally forcing the property to reset its value.
    *
+   * <p>Also notifies any property listeners of the change.
+   *
    * @param value the value to set
    * @param force true if the property change should be forced, otherwise false
    * @see #setValue(String)
@@ -142,8 +177,14 @@ public final class EditableProperty extends Property {
       if (properties != null) {
         properties.firePropertyChangeEvent(getName(), value);
       }
-      editor.updateValue();
+      if (editor != null) {
+        editor.updateValue();
+      }
     }
+  }
+
+  public void setEditor(PropertyEditor editor) {
+    this.editor = editor;
   }
 
   /**
@@ -179,7 +220,7 @@ public final class EditableProperty extends Property {
   }
 
   public String[] getEditorArgs() {
-    return editorArgs;
+    return this.definition != null ? this.definition.getEditorArgs() : null;
   }
 
 
@@ -194,8 +235,11 @@ public final class EditableProperty extends Property {
     return type;
   }
 
-  public void setType(int aType) {
-    this.type = aType;
+  public void setType(int type) {
+    this.type = type;
   }
 
+  public ComponentDatabaseInterface.PropertyDefinition getDefinition() {
+    return definition;
+  }
 }

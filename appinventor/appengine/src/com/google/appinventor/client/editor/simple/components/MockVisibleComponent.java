@@ -9,11 +9,9 @@ package com.google.appinventor.client.editor.simple.components;
 import static com.google.appinventor.client.Ode.MESSAGES;
 
 import com.google.appinventor.client.editor.simple.SimpleEditor;
-import com.google.appinventor.client.editor.youngandroid.properties.YoungAndroidLengthPropertyEditor;
-import com.google.appinventor.client.widgets.properties.TextPropertyEditor;
 import com.google.appinventor.components.common.ComponentConstants;
-import com.google.appinventor.components.common.PropertyTypeConstants;
 import com.google.appinventor.shared.settings.SettingsConstants;
+import com.google.appinventor.shared.simple.ComponentDatabaseInterface;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
@@ -26,7 +24,7 @@ public abstract class MockVisibleComponent extends MockComponent {
 
   // Common property names (not all components support all properties).
   protected static final String PROPERTY_NAME_TEXTALIGNMENT = "TextAlignment";
-  protected static final String PROPERTY_NAME_BUTTONSHAPE= "Shape";
+  protected static final String PROPERTY_NAME_BUTTONSHAPE = "Shape";
   protected static final String PROPERTY_NAME_BACKGROUNDCOLOR = "BackgroundColor";
   protected static final String PROPERTY_NAME_BACKGROUNDIMAGE = "BackgroundImage";
   protected static final String PROPERTY_NAME_THUMBCOLORACTIVE = "ThumbColorActive";
@@ -82,6 +80,13 @@ public abstract class MockVisibleComponent extends MockComponent {
       SettingsConstants.PROJECT_YOUNG_ANDROID_SETTINGS,
       SettingsConstants.YOUNG_ANDROID_SETTINGS_ACCENT_COLOR);
 
+  private static final ComponentDatabaseInterface.PropertyDefinition COLUMN_PROPERTY =
+      new ComponentDatabaseInterface.PropertyDefinition(PROPERTY_NAME_COLUMN,
+          "" + ComponentConstants.DEFAULT_ROW_COLUMN, null, null, null);
+  private static final ComponentDatabaseInterface.PropertyDefinition ROW_PROPERTY =
+      new ComponentDatabaseInterface.PropertyDefinition(PROPERTY_NAME_ROW,
+          "" + ComponentConstants.DEFAULT_ROW_COLUMN, null, null, null);
+
   /**
    * Creates a new instance of a visible component.
    *
@@ -97,20 +102,8 @@ public abstract class MockVisibleComponent extends MockComponent {
 
     // Add standard per-child layout properties
     // NOTE: Not all layouts use these properties
-    addProperty(PROPERTY_NAME_COLUMN, "" + ComponentConstants.DEFAULT_ROW_COLUMN, null,
-        new TextPropertyEditor());
-    addProperty(PROPERTY_NAME_ROW, "" + ComponentConstants.DEFAULT_ROW_COLUMN, null,
-        new TextPropertyEditor());
-    addWidthHeightProperties();
-  }
-
-  protected void addWidthHeightProperties() {
-    addProperty(PROPERTY_NAME_WIDTH, "" + LENGTH_PREFERRED, MESSAGES.widthPropertyCaption(),
-        PropertyTypeConstants.PROPERTY_TYPE_LENGTH, null,
-        new YoungAndroidLengthPropertyEditor());
-    addProperty(PROPERTY_NAME_HEIGHT, "" + LENGTH_PREFERRED, MESSAGES.heightPropertyCaption(),
-        PropertyTypeConstants.PROPERTY_TYPE_LENGTH, null,
-        new YoungAndroidLengthPropertyEditor());
+    addProperty(COLUMN_PROPERTY);
+    addProperty(ROW_PROPERTY);
   }
 
   @Override
@@ -125,7 +118,7 @@ public abstract class MockVisibleComponent extends MockComponent {
   /**
    * {@inheritDoc}
    *
-   * This is always {@code true} for subclasses of this class.
+   * <p>This is always {@code true} for subclasses of this class.
    */
   @Override
   public final boolean isVisibleComponent() {

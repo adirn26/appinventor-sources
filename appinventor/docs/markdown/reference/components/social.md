@@ -80,7 +80,7 @@ A button that, when clicked on, displays a list of the contacts to choose among.
  serif, monospace, or custom font typeface. To add a custom typeface,
  upload a .ttf file to the project's media.
 
-{:id="ContactPicker.Height" .number .bo} *Height*
+{:id="ContactPicker.Height" .number} *Height*
 : Specifies the `ContactPicker`'s vertical height, measured in pixels.
 
 {:id="ContactPicker.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -128,7 +128,7 @@ A button that, when clicked on, displays a list of the contacts to choose among.
 : Specifies whether the `ContactPicker` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `ContactPicker` is showing and `false`{:.logic.block} if hidden.
 
-{:id="ContactPicker.Width" .number .bo} *Width*
+{:id="ContactPicker.Width" .number} *Width*
 : Specifies the horizontal width of the `ContactPicker`, measured in pixels.
 
 {:id="ContactPicker.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -217,7 +217,7 @@ An `EmailPicker` is a kind of text box. If the user begins entering the name or 
 : The text font face of the `EmailPicker`. Valid values are `0` (default), `1` (serif), `2` (sans
  serif), or `3` (monospace).
 
-{:id="EmailPicker.Height" .number .bo} *Height*
+{:id="EmailPicker.Height" .number} *Height*
 : Specifies the `EmailPicker`'s vertical height, measured in pixels.
 
 {:id="EmailPicker.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -245,7 +245,7 @@ An `EmailPicker` is a kind of text box. If the user begins entering the name or 
 : Specifies whether the `EmailPicker` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `EmailPicker` is showing and `false`{:.logic.block} if hidden.
 
-{:id="EmailPicker.Width" .number .bo} *Width*
+{:id="EmailPicker.Width" .number} *Width*
 : Specifies the horizontal width of the `EmailPicker`, measured in pixels.
 
 {:id="EmailPicker.WidthPercent" .number .wo .bo} *WidthPercent*
@@ -393,7 +393,7 @@ A button that, when clicked on, displays a list of the contacts' phone numbers t
  serif, monospace, or custom font typeface. To add a custom typeface,
  upload a .ttf file to the project's media.
 
-{:id="PhoneNumberPicker.Height" .number .bo} *Height*
+{:id="PhoneNumberPicker.Height" .number} *Height*
 : Specifies the `PhoneNumberPicker`'s vertical height, measured in pixels.
 
 {:id="PhoneNumberPicker.HeightPercent" .number .wo .bo} *HeightPercent*
@@ -441,7 +441,7 @@ A button that, when clicked on, displays a list of the contacts' phone numbers t
 : Specifies whether the `PhoneNumberPicker` should be visible on the screen.  Value is `true`{:.logic.block}
  if the `PhoneNumberPicker` is showing and `false`{:.logic.block} if hidden.
 
-{:id="PhoneNumberPicker.Width" .number .bo} *Width*
+{:id="PhoneNumberPicker.Width" .number} *Width*
 : Specifies the horizontal width of the `PhoneNumberPicker`, measured in pixels.
 
 {:id="PhoneNumberPicker.WidthPercent" .number .wo .bo} *WidthPercent*

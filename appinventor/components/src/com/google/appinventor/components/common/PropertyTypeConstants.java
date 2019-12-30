@@ -14,7 +14,8 @@ package com.google.appinventor.components.common;
  */
 @SuppressWarnings("checkstyle:LineLength")
 public class PropertyTypeConstants {
-  private PropertyTypeConstants() {}
+  private PropertyTypeConstants() {
+  }
 
   /**
    * User-uploaded assets.
@@ -397,4 +398,17 @@ public class PropertyTypeConstants {
    */
   public static final String PROPERTY_TYPE_CHART_LINE_TYPE = "chart_line_type";
 
+  /**
+   * Specifies that an editor for the X-dimension should be used. The editorArgs field of the
+   * DesignerProperty annotation can be used to control which types are visible. Valid args are
+   * "auto", "full", "px", and "%".
+   */
+  public static final String PROPERTY_TYPE_X_DIM_MEASURE = "xdim";
+
+  /**
+   * Specifies that an editor for the Y-dimension should be used. The editorArgs field of the
+   * DesignerProperty annotation can be used to control which types are visible. Valid args are
+   * "auto", "full", "px", and "%".
+   */
+  public static final String PROPERTY_TYPE_Y_DIM_MEASURE = "ydim";
 }

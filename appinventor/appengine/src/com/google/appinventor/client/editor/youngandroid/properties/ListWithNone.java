@@ -21,6 +21,7 @@ final class ListWithNone {
     String getItem(int index);
     void removeItem(int index);
     void setSelectedIndex(int index);
+    void clear();
   }
 
   private final ListBoxWrapper listBoxWrapper;
@@ -40,6 +41,13 @@ final class ListWithNone {
     values = new ArrayList<String>();
 
     values.add("");
+    listBoxWrapper.addItem(noneDisplayItem);
+  }
+
+  void clear() {
+    values.clear();
+    values.add("");
+    listBoxWrapper.clear();
     listBoxWrapper.addItem(noneDisplayItem);
   }
 
