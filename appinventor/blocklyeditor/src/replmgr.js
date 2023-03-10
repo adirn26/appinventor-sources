@@ -1511,6 +1511,8 @@ Blockly.ReplMgr.rendezvousDone = function() {
     var usewebrtc = rs.webrtc;
     var useproxy = rs.useproxy; // Only checked if webrtc is false
 
+    console.log("formjson: "+top.ReplState.phoneState.formJson)
+            console.log("componentdb: "+top.COMPONENT_DB)
     var checkversion = new Promise(function (resolve, reject) {
         // Time to check the version of the Companion that we get from the
         // Rendezvous server. Note: Only post 2.47 Companions provide this
@@ -1550,6 +1552,46 @@ Blockly.ReplMgr.rendezvousDone = function() {
             resolve();
         }
     });
+
+    var checkiOS = new Promise(function (resolve, reject) {
+      if (rs.android) {
+        var componentJson = JSON.parse(top.ReplState.phoneState.formJson).Properties.$Components;
+        var componentDB = JSON.parse(top.COMPONENT_DB);
+        var componentTypes = [];
+        var iosIncompatible = [];
+        for (var i = 0; i < componentJson.length; i++) {
+          componentTypes.push(componentJson[i].$Type);
+        }
+        for (var i = 0; i < componentDB.length; i++) {
+          if (componentTypes.includes(componentDB[i].name)) {
+            if (componentDB[i].iosCompatible == "false") {
+              iosIncompatible.push(componentDB[i].name);
+            }
+          }
+        }
+        if (iosIncompatible.length > 0) {
+          //dialog box containing list of incompatible components
+          var dialog = new Blockly.Util.Dialog(
+            Blockly.Msg.REPL_IOS_COMPANION_COMPONENT_CHECK,
+            Blockly.Msg.REPL_IOS_COMPANION_COMPONENT_NOT_AVAILABLE +
+              "<br/>" + Blockly.ReplMgr.makeIosIncompatibleDialogMsg(iosIncompatible),
+            Blockly.Msg.REPL_OK,
+            false,
+            null,
+            0,
+            function (response) {
+              dialog.hide();
+              reject();
+            }
+          );
+        } else {
+          resolve();
+        }
+      } else {
+        resolve();
+      }
+    });
+
     var startwebrtc = function() {
         top.usewebrtc = true;
         rs.state = me.rsState.ASSET;
@@ -1666,6 +1708,7 @@ Blockly.ReplMgr.rendezvousDone = function() {
         phoneState.initialized = true;
     }
 
+    checkiOS.then(function(){
     checkversion.then(function() {
         if (usewebrtc) {
             startwebrtc();
@@ -1676,8 +1719,19 @@ Blockly.ReplMgr.rendezvousDone = function() {
         }
     }, function() {
         return;
+    })}, function() {
+          return;
     });
 };
+
+Blockly.ReplMgr.makeIosIncompatibleDialogMsg = function(iosIncompatible){
+        var result = "<ul>"
+        for(var i=0;i<iosIncompatible.length;i++){
+            result+="<li>"+iosIncompatible[i]+"</li>"
+        }
+        result+="</ul>" + "<a href="+Blockly.Msg.REPL_IOS_COMPANION_PROGRESS_URL+">"+Blockly.Msg.REPL_IOS_COMPANION_PROGRESS_TRACK+"</a>"
+        return result
+ }
 
 Blockly.ReplMgr.resendAssetsAndExtensions = function() {
     var rs = top.ReplState;

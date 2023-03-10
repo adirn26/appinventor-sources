@@ -46,10 +46,12 @@ public interface ComponentDatabaseInterface {
     private final String licenseName;
     private final String typeDescription;
 
+    private final boolean iosCompatible;
+
     public ComponentDefinition(String name, int version, String versionName, String dateBuilt, String type, boolean external,
               String categoryString, String helpString, String helpUrl,
               boolean showOnPalette, boolean nonVisible, String iconName,
-              String licenseName, String typeDescription) {
+              String licenseName, String typeDescription, boolean iosCompatible) {
       this.name = name;
       this.version = version;
       this.versionName = versionName;
@@ -70,6 +72,7 @@ public interface ComponentDatabaseInterface {
       this.iconName = iconName;
       this.licenseName = licenseName;
       this.typeDescription = typeDescription;
+      this.iosCompatible = iosCompatible;
     }
 
     public void add(PropertyDefinition property) {
@@ -166,6 +169,8 @@ public interface ComponentDatabaseInterface {
     public String getTypeDescription() {
       return typeDescription;
     }
+
+    public boolean getIosCompatible() {return iosCompatible;}
   }
 
 
@@ -473,6 +478,9 @@ public interface ComponentDatabaseInterface {
    * by external components.
    */
   String getLicenseName(String componentName);
+
+  boolean getIosCompatible(String componentName);
+
 
   /**
    * Returns a list of a component's property definitions.

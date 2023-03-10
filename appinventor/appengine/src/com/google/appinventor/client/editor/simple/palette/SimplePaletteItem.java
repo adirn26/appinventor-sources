@@ -7,6 +7,8 @@
 package com.google.appinventor.client.editor.simple.palette;
 
 import com.google.appinventor.client.ComponentsTranslation;
+import com.google.appinventor.client.Images;
+import com.google.appinventor.client.Ode;
 import com.google.appinventor.client.editor.simple.components.MockComponent;
 import com.google.appinventor.client.editor.simple.components.MockComponentsUtil;
 import com.google.appinventor.client.widgets.dnd.DragSourcePanel;
@@ -39,6 +41,8 @@ public class SimplePaletteItem extends DragSourcePanel {
   //It is here to keep the selected panel item
   private static Widget selectedPaletteItemWidget;
 
+  private static final Images images = Ode.getImageBundle();
+
   /**
    * Creates a new palette item.
    *
@@ -67,6 +71,16 @@ public class SimplePaletteItem extends DragSourcePanel {
     panel.add(label);
 
     HorizontalPanel optPanel = new HorizontalPanel();
+
+    if(scd.getIosCompatible()) {
+      Image iosImage = new Image(images.iOSlogo());
+      iosImage.setWidth("16px");
+      iosImage.setHeight("16px");
+      iosImage.setStylePrimaryName("ode-SimplePaletteItem-icon");
+      optPanel.add(iosImage);
+      optPanel.setCellHorizontalAlignment(iosImage, HorizontalPanel.ALIGN_LEFT);
+      optPanel.setCellWidth(iosImage, "30px");
+    }
 
     ComponentHelpWidget helpImage = new ComponentHelpWidget(scd);
     optPanel.add(helpImage);

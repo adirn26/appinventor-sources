@@ -922,6 +922,9 @@ public class BlocklyPanel extends HTMLPanel {
       .populateComponentTypes(jsonComponentsStr, @com.google.appinventor.client.editor.youngandroid.BlocklyPanel::SIMPLE_COMPONENT_TRANSLATIONS);
   }-*/;
 
+  public native void addComponentDB(String jsonComponentsStr) /*-{
+  $wnd.COMPONENT_DB = jsonComponentsStr
+}-*/;
   /**
    * Update Component Types in Blockly ComponentTypes
    */

@@ -137,6 +137,7 @@ public final class ComponentDescriptorGenerator extends ComponentProcessor {
     json.put("iconName", component.getIconName());
     json.put("licenseName", component.getLicenseName());
     json.put("androidMinSdk", Integer.toString(component.getAndroidMinSdk()));
+    json.put("iosCompatible", Boolean.toString(component.getIosCompatible()));
     outputConditionalAnnotations(component, json);
     outputProperties(component, json);
     outputEvents(component, json);

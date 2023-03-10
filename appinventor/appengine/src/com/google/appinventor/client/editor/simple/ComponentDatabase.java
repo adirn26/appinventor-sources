@@ -265,6 +265,16 @@ class ComponentDatabase implements ComponentDatabaseInterface {
   }
 
   @Override
+  public boolean getIosCompatible(String componentName) {
+    ComponentDefinition component = components.get(componentName);
+    if (component == null) {
+      throw new ComponentNotFoundException(componentName);
+    }
+    return component.getIosCompatible();
+  }
+
+
+  @Override
   public List<PropertyDefinition> getPropertyDefinitions(String componentName) {
     ComponentDefinition component = components.get(componentName);
     if (component == null) {
@@ -352,7 +362,7 @@ class ComponentDatabase implements ComponentDatabaseInterface {
         Boolean.valueOf(properties.get("nonVisible").asString().getString()),
         properties.get("iconName").asString().getString(),
         properties.containsKey("licenseName") ? properties.get("licenseName").asString().getString() : "",
-        componentNode.toJson());
+        componentNode.toJson(),Boolean.valueOf(properties.get("iosCompatible").asString().getString()));
     findComponentProperties(component, properties.get("properties").asArray());
     findComponentBlockProperties(component, properties.get("blockProperties").asArray());
     findComponentEvents(component, properties.get("events").asArray());

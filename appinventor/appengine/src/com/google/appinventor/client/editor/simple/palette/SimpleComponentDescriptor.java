@@ -110,6 +110,9 @@ public final class SimpleComponentDescriptor {
 
   private final String dateBuilt;
 
+  private final boolean iosCompatible;
+
+
   // Component database: information about components (including their properties and events)
   private final SimpleComponentDatabase COMPONENT_DATABASE;
 
@@ -203,7 +206,8 @@ public final class SimpleComponentDescriptor {
                                    String categoryDocUrlString,
                                    boolean showOnPalette,
                                    boolean nonVisible,
-                                   boolean external) {
+                                   boolean external,
+                                   boolean iosCompatible) {
     this.name = name;
     this.editor = editor;
     this.version = version;
@@ -215,6 +219,7 @@ public final class SimpleComponentDescriptor {
     this.showOnPalette = showOnPalette;
     this.nonVisible = nonVisible;
     this.external = external;
+    this.iosCompatible = iosCompatible;
     COMPONENT_DATABASE = SimpleComponentDatabase.getInstance(editor.getProjectId());
   }
 
@@ -287,6 +292,11 @@ public final class SimpleComponentDescriptor {
   public boolean getNonVisible() {
     return nonVisible;
   }
+
+  public boolean getIosCompatible() {
+    return iosCompatible;
+  }
+
 
   /**
    * Returns an image for display on the component palette.

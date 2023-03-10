@@ -360,11 +360,12 @@ public class YoungAndroidPalettePanel extends Composite implements SimplePalette
     Boolean showOnPalette = COMPONENT_DATABASE.getShowOnPalette(componentTypeName);
     Boolean nonVisible = COMPONENT_DATABASE.getNonVisible(componentTypeName);
     Boolean external = COMPONENT_DATABASE.getComponentExternal(componentTypeName);
+    Boolean iosCompatible = COMPONENT_DATABASE.getIosCompatible(componentTypeName);
     ComponentCategory category = ComponentCategory.valueOf(categoryString);
     if (showOnPalette && showCategory(category)) {
       SimplePaletteItem item = new SimplePaletteItem(
           new SimpleComponentDescriptor(componentTypeName, editor, version, versionName, dateBuilt, helpString, helpUrl,
-              categoryDocUrlString, showOnPalette, nonVisible, external),
+              categoryDocUrlString, showOnPalette, nonVisible, external, iosCompatible),
             dropTargetProvider);
       simplePaletteItems.put(componentTypeName, item);
       addPaletteItem(item, category);
@@ -372,7 +373,7 @@ public class YoungAndroidPalettePanel extends Composite implements SimplePalette
       // Make a second copy for the search mechanism
       item = new SimplePaletteItem(
           new SimpleComponentDescriptor(componentTypeName, editor, version, versionName, dateBuilt,
-              helpString, helpUrl, categoryDocUrlString, showOnPalette, nonVisible, external),
+              helpString, helpUrl, categoryDocUrlString, showOnPalette, nonVisible, external, iosCompatible),
           dropTargetProvider);
       // Handle extensions
       if (external) {

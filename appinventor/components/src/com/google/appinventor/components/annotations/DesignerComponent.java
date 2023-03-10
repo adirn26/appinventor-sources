@@ -112,4 +112,6 @@ public @interface DesignerComponent {
    * @return The name of the LICENSE file
    */
   String licenseName() default "";
+
+  boolean iosCompatible() default false;
 }

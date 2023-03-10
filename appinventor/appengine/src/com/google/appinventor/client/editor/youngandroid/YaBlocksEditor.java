@@ -149,6 +149,8 @@ public final class YaBlocksEditor extends FileEditor
     });
     initWidget(blocksArea);
     blocksArea.populateComponentTypes(COMPONENT_DATABASE.getComponentsJSONString());
+    //add compenent database to the browser window
+    blocksArea.addComponentDB(COMPONENT_DATABASE.getComponentsJSONString());
 
     // Get references to the source structure explorer
     sourceStructureExplorer = BlockSelectorBox.getBlockSelectorBox().getSourceStructureExplorer();

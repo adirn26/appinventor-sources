@@ -1240,6 +1240,8 @@ public abstract class ComponentProcessor extends AbstractProcessor {
     private String dateBuilt;
     private String licenseName;
 
+    private boolean iosCompatible;
+
     protected ComponentInfo(Element element) {
       super(element.getSimpleName().toString(),  // Short name
             elementUtils.getDocComment(element),
@@ -1277,6 +1279,7 @@ public abstract class ComponentProcessor extends AbstractProcessor {
       external = false;
       versionName = null;
       dateBuilt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(new Date());
+
       for (AnnotationMirror am : element.getAnnotationMirrors()) {
         DeclaredType dt = am.getAnnotationType();
         String annotationName = am.getAnnotationType().toString();
@@ -1339,9 +1342,15 @@ public abstract class ComponentProcessor extends AbstractProcessor {
           androidMinSdk = designerComponentAnnotation.androidMinSdk();
           versionName = designerComponentAnnotation.versionName();
           userVisible = designerComponentAnnotation.showOnPalette();
+          iosCompatible = designerComponentAnnotation.iosCompatible();
         }
       }
     }
+
+    protected boolean getIosCompatible(){
+      return iosCompatible;
+    }
+
 
     /**
      * A brief description of this component to be shown when the user requests

@@ -57,6 +57,11 @@ public final class ComponentHelpWidget extends AbstractPaletteItemWidget {
       // popup's widget.
       VerticalPanel inner = new VerticalPanel();
       inner.add(titleBar);
+      if(scd.getIosCompatible()){
+        HTML iosCompatibleText = new HTML(Ode.MESSAGES.iosCompatible());        iosCompatibleText.setStyleName("ode-ComponentHelpPopup-iOS");
+        inner.add(iosCompatibleText);
+      }
+
       inner.add(helpText);
 
       // Create link to more information.  This would be cleaner if
