@@ -1554,7 +1554,7 @@ Blockly.ReplMgr.rendezvousDone = function() {
     });
 
     var checkiOS = new Promise(function (resolve, reject) {
-      if (rs.android) {
+      if (!rs.android) {
         var componentJson = JSON.parse(top.ReplState.phoneState.formJson).Properties.$Components;
         var componentDB = JSON.parse(top.COMPONENT_DB);
         var componentTypes = [];
