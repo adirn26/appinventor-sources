@@ -61,8 +61,6 @@ import jsinterop.annotations.JsType;
 public class YoungAndroidPalettePanel extends Composite
     implements SimplePalettePanel, ComponentDatabaseChangeListener {
 
-  private static ComponentCoverage componentCoverage = ComponentCoverage.getInstance();
-
   /**
    * The Filter interface is used by the palette panel to determine what components
    * to show. By default, an identity filter is used (everything is shown). Other
@@ -85,6 +83,8 @@ public class YoungAndroidPalettePanel extends Composite
     boolean shouldShowExtensions();
   }
 
+  private static ComponentCoverage componentCoverage = ComponentCoverage.getInstance();
+
   // Identity filter implementation
   private static final Filter IDENTITY = new Filter() {
     @Override
@@ -99,7 +99,7 @@ public class YoungAndroidPalettePanel extends Composite
   };
 
   //show ios components only implementation
-  private static final Filter SHOWIOSONLY = new Filter() {
+  private static final Filter SHOW_IOS_ONLY = new Filter() {
     @Override
     public boolean shouldShowComponent(String componentTypeName) {
       return componentCoverage.isIosCompatible(componentTypeName);
@@ -112,7 +112,7 @@ public class YoungAndroidPalettePanel extends Composite
   };
 
   //show android components only implementation
-  private static final Filter SHOWANDROIDONLY  = new Filter() {
+  private static final Filter SHOW_ANDROID_ONLY = new Filter() {
     @Override
     public boolean shouldShowComponent(String componentTypeName) {
       return componentCoverage.isAndroidCompatible(componentTypeName);
@@ -125,7 +125,7 @@ public class YoungAndroidPalettePanel extends Composite
   };
 
   //show both compatible only implementation
-  private static final Filter SHOWBOTHCOMPATIBLE = new Filter() {
+  private static final Filter SHOW_BOTH_COMPATIBLE = new Filter() {
     @Override
     public boolean shouldShowComponent(String componentTypeName) {
       return (componentCoverage.isAndroidCompatible(componentTypeName) && componentCoverage.isIosCompatible(componentTypeName));
@@ -387,7 +387,7 @@ public class YoungAndroidPalettePanel extends Composite
       @Override
       public void execute() {
         componentFilter.setCaption("Only Android");
-        setOsFilter(SHOWANDROIDONLY);
+        setOsFilter(SHOW_ANDROID_ONLY);
       }
     }));
 
@@ -395,7 +395,7 @@ public class YoungAndroidPalettePanel extends Composite
       @Override
       public void execute() {
         componentFilter.setCaption("Only iOS");
-        setOsFilter(SHOWIOSONLY);
+        setOsFilter(SHOW_IOS_ONLY);
       }
     }));
 
@@ -403,7 +403,7 @@ public class YoungAndroidPalettePanel extends Composite
       @Override
       public void execute() {
         componentFilter.setCaption("Only Supported By both");
-        setOsFilter(SHOWBOTHCOMPATIBLE);
+        setOsFilter(SHOW_BOTH_COMPATIBLE);
       }
     }));
 
